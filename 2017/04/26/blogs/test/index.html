@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="博客搭建," />
 
 
 
@@ -90,14 +90,17 @@
 
 
 
-<meta name="keywords">
+<meta name="description" content="部署文章cd到站点目录下 1234567hexo clean  //每次有大变动，比如更换主题等操作时，可以清理以下之前的缓存；  hexo g  //即hexo generate，生成静态文件；hexo s  //即hexo server，启动服务器。默认情况下，访问网址为： http://localhost:4000/； hexo d  //即hexo deploy，部署网站到Github。">
+<meta name="keywords" content="博客搭建">
 <meta property="og:type" content="article">
-<meta property="og:title" content="分类测试文章">
+<meta property="og:title" content="github+hexo搭建个人博客">
 <meta property="og:url" content="http://yoursite.com/2017/04/26/blogs/test/index.html">
-<meta property="og:site_name" content="Abyss's Notes">
-<meta property="og:updated_time" content="2017-04-26T09:43:56.000Z">
+<meta property="og:site_name" content="Abyss's Blog">
+<meta property="og:description" content="部署文章cd到站点目录下 1234567hexo clean  //每次有大变动，比如更换主题等操作时，可以清理以下之前的缓存；  hexo g  //即hexo generate，生成静态文件；hexo s  //即hexo server，启动服务器。默认情况下，访问网址为： http://localhost:4000/； hexo d  //即hexo deploy，部署网站到Github。">
+<meta property="og:updated_time" content="2017-04-27T10:10:36.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="分类测试文章">
+<meta name="twitter:title" content="github+hexo搭建个人博客">
+<meta name="twitter:description" content="部署文章cd到站点目录下 1234567hexo clean  //每次有大变动，比如更换主题等操作时，可以清理以下之前的缓存；  hexo g  //即hexo generate，生成静态文件；hexo s  //即hexo server，启动服务器。默认情况下，访问网址为： http://localhost:4000/； hexo d  //即hexo deploy，部署网站到Github。">
 
 
 
@@ -131,7 +134,7 @@
 
 
 
-  <title>分类测试文章 | Abyss's Notes</title>
+  <title>github+hexo搭建个人博客 | Abyss's Blog</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -167,7 +170,7 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Abyss's Notes</span>
+        <span class="site-title">Abyss's Blog</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -202,12 +205,12 @@
         </li>
       
         
-        <li class="menu-item menu-item-about">
-          <a href="/about" rel="section">
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
-            关于
+            分类
           </a>
         </li>
       
@@ -265,11 +268,11 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Abyss">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="http://i4.buimg.com/567571/3e920dd2ad03e598.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Abyss's Notes">
+      <meta itemprop="name" content="Abyss's Blog">
     </span>
 
     
@@ -281,7 +284,7 @@
             
             
               
-                分类测试文章
+                github+hexo搭建个人博客
               
             
           </h1>
@@ -319,8 +322,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Testing/" itemprop="url" rel="index">
-                    <span itemprop="name">Testing</span>
+                  <a href="/categories/奇技淫巧/" itemprop="url" rel="index">
+                    <span itemprop="name">奇技淫巧</span>
                   </a>
                 </span>
 
@@ -353,7 +356,19 @@
       
 
       
-        
+        <h3 id="部署文章"><a href="#部署文章" class="headerlink" title="部署文章"></a>部署文章</h3><p>cd到站点目录下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">hexo clean  //每次有大变动，比如更换主题等操作时，可以清理以下之前的缓存；  </div><div class="line"></div><div class="line">hexo g  //即hexo generate，生成静态文件；</div><div class="line"></div><div class="line">hexo s  //即hexo server，启动服务器。默认情况下，访问网址为： http://localhost:4000/； </div><div class="line"></div><div class="line">hexo d  //即hexo deploy，部署网站到Github。</div></pre></td></tr></table></figure>
+<h2 id="配置Next主题"><a href="#配置Next主题" class="headerlink" title="配置Next主题"></a>配置Next主题</h2><h3 id="语言设置"><a href="#语言设置" class="headerlink" title="语言设置"></a>语言设置</h3><p>编辑站点配置文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">language: zh-Hans</div></pre></td></tr></table></figure>
+<h3 id="头像设置"><a href="#头像设置" class="headerlink" title="头像设置"></a>头像设置</h3><p>编辑 站点配置文件，新增字段 avatar， 值设置成头像的链接地址。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">avatar: http://i4.buimg.com/567571/90a95ca92101d442.png</div></pre></td></tr></table></figure>
+<h3 id="添加页面"><a href="#添加页面" class="headerlink" title="添加页面"></a>添加页面</h3><p>添加分类页面</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hexo new page &quot;categories&quot;</div></pre></td></tr></table></figure>
+<p>在source文件夹下就会有categories文件夹，编辑index.md，然后进入主题的_config.yml中，menu下的#categories注释去掉</p>
+<h3 id="添加标签云页面"><a href="#添加标签云页面" class="headerlink" title="添加标签云页面"></a>添加标签云页面</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hexo new page &quot;tags&quot;</div></pre></td></tr></table></figure>
+<p>然后设置同上，去掉主题配置文件中的注释，调整菜单顺序</p>
+<h3 id="设置首页不显示全文"><a href="#设置首页不显示全文" class="headerlink" title="设置首页不显示全文"></a>设置首页不显示全文</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">auto_excerpt:</div><div class="line">  enable: true</div><div class="line">  length: 300</div></pre></td></tr></table></figure>
+
       
     </div>
 
@@ -379,6 +394,12 @@
     </div>
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/博客搭建/" rel="tag"># 博客搭建</a>
+          
+        </div>
       
 
       
@@ -444,15 +465,24 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
-               src="/images/avatar.gif"
+               src="http://i4.buimg.com/567571/3e920dd2ad03e598.jpg"
                alt="Abyss" />
           <p class="site-author-name" itemprop="name">Abyss</p>
            
-              <p class="site-description motion-element" itemprop="description">Abyss的个人博客</p>
+              <p class="site-description motion-element" itemprop="description">灵魂歌者 | 意识流作家 | Geek</p>
           
         </div>
         <nav class="site-state motion-element">
@@ -470,13 +500,22 @@
             
             
             <div class="site-state-item site-state-categories">
-              
+              <a href="/categories/index.html">
                 <span class="site-state-item-count">1</span>
                 <span class="site-state-item-name">分类</span>
-              
+              </a>
             </div>
           
 
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
           
 
         </nav>
@@ -484,6 +523,15 @@
         
 
         <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/3372468724/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" target="_blank" title="weibo">
+                  
+                  weibo
+                </a>
+              </span>
+            
           
         </div>
 
@@ -498,6 +546,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#部署文章"><span class="nav-number">1.</span> <span class="nav-text">部署文章</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置Next主题"><span class="nav-number"></span> <span class="nav-text">配置Next主题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#语言设置"><span class="nav-number">1.</span> <span class="nav-text">语言设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#头像设置"><span class="nav-number">2.</span> <span class="nav-text">头像设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加页面"><span class="nav-number">3.</span> <span class="nav-text">添加页面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加标签云页面"><span class="nav-number">4.</span> <span class="nav-text">添加标签云页面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置首页不显示全文"><span class="nav-number">5.</span> <span class="nav-text">设置首页不显示全文</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -524,7 +588,7 @@
 
 
 <div class="powered-by">
-   Hexo 个人专属
+    个人专属
 </div>
 
 <div class="theme-info">
