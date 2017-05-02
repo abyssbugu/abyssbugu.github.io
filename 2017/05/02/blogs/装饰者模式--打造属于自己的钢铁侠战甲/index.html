@@ -1,0 +1,786 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="装饰者模式," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="背景介绍 装饰者模式也称为包装模式,属于结构型设计模式,本次通过学习装饰者模式,运用对装饰者模式的理解,打造一套属于自己的钢铁侠战甲!让我们开始吧~">
+<meta name="keywords" content="装饰者模式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="装饰者模式-打造属于自己的钢铁侠战甲">
+<meta property="og:url" content="http://yoursite.com/2017/05/02/blogs/装饰者模式--打造属于自己的钢铁侠战甲/index.html">
+<meta property="og:site_name" content="Abyss's Blog">
+<meta property="og:description" content="背景介绍 装饰者模式也称为包装模式,属于结构型设计模式,本次通过学习装饰者模式,运用对装饰者模式的理解,打造一套属于自己的钢铁侠战甲!让我们开始吧~">
+<meta property="og:image" content="http://i2.muimg.com/567571/44d2ba50fb07d480.png">
+<meta property="og:image" content="http://i4.buimg.com/567571/c7534f118274d9bd.png">
+<meta property="og:image" content="http://i4.buimg.com/567571/8fd43cdd9221a3b3.png">
+<meta property="og:updated_time" content="2017-05-02T08:56:02.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="装饰者模式-打造属于自己的钢铁侠战甲">
+<meta name="twitter:description" content="背景介绍 装饰者模式也称为包装模式,属于结构型设计模式,本次通过学习装饰者模式,运用对装饰者模式的理解,打造一套属于自己的钢铁侠战甲!让我们开始吧~">
+<meta name="twitter:image" content="http://i2.muimg.com/567571/44d2ba50fb07d480.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/05/02/blogs/装饰者模式--打造属于自己的钢铁侠战甲/"/>
+
+
+
+
+
+  <title>装饰者模式-打造属于自己的钢铁侠战甲 | Abyss's Blog</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Abyss's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">我的征途是星辰大海</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/02/blogs/装饰者模式--打造属于自己的钢铁侠战甲/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Abyss">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://i4.buimg.com/567571/3e920dd2ad03e598.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Abyss's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                装饰者模式-打造属于自己的钢铁侠战甲
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-02T16:48:32+08:00">
+                2017-05-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/设计模式/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="http://i2.muimg.com/567571/44d2ba50fb07d480.png" alt=""></p>
+<h2 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h2><blockquote>
+<p>装饰者模式也称为包装模式,属于结构型设计模式,本次通过学习装饰者模式,运用对装饰者模式的理解,打造一套属于自己的钢铁侠战甲!让我们开始吧~</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><blockquote>
+<p>Decorator Pattern，是在不必改变原类文件和使用继承的情况下，动态地扩展一个对象的功能,它是通过创建一个包装对象，也就是装饰来包裹真实的对象。<br>装饰者是代替继承扩展功能另外一种方式，装饰者模式遵循了多用组合少用继承和对扩展开放对修改关闭的设计原则。</p>
+</blockquote>
+<h2 id="UML类图"><a href="#UML类图" class="headerlink" title="UML类图"></a>UML类图</h2><p><img src="http://i4.buimg.com/567571/c7534f118274d9bd.png" alt=""></p>
+<ul>
+<li>Component(抽象构件):定义一个抽象接口,规范待装饰者的功能和方法</li>
+<li>ConcreteComponent(具体构件):实现抽象接口的待装饰类</li>
+<li>Decorator(装饰者):持有Component对象的实例,并定义一个与抽象构件接口一致的接口</li>
+<li>ConcreateDecorator(具体装饰):是Decorator的子类也是Component的子类,在持有Component的引用后，由于其自身也是Component的子类，那么，相当于ConcreteDecorator包裹了Component，不但有Component的特性，同时自身也可以有别的特性，也就是所谓的装饰。</li>
+</ul>
+<h2 id="举个栗子"><a href="#举个栗子" class="headerlink" title="举个栗子"></a>举个栗子</h2><h4 id="现在我们有一套钢铁侠机甲-Mark-现在需要对机甲进行改造升级-就像"><a href="#现在我们有一套钢铁侠机甲-Mark-现在需要对机甲进行改造升级-就像" class="headerlink" title="现在我们有一套钢铁侠机甲(Mark),现在需要对机甲进行改造升级, 就像"></a>现在我们有一套钢铁侠机甲(Mark),现在需要对机甲进行改造升级, 就像</h4><p>▪ Mark40猎枪</p>
+<p>▪ Mark41骨骼</p>
+<p>▪ Mark42浪子</p>
+<p>▪ Mark44反浩克装甲</p>
+<p>▪ Mark46血边战甲</p>
+<h3 id="1-创建Compnent-定义马克战甲的接口"><a href="#1-创建Compnent-定义马克战甲的接口" class="headerlink" title="1. 创建Compnent,定义马克战甲的接口"></a>1. 创建Compnent,定义马克战甲的接口</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">package decorater;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Created by Abyss on 2017/5/2.</div><div class="line"> * description:马克战甲的接口</div><div class="line"> */</div><div class="line">public interface IMark &#123;</div><div class="line">    public int fightingCapacity();//战斗力</div><div class="line">    public String description();//描述</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="2-创建ConcreateComponent具体待装饰者-初代马克战甲"><a href="#2-创建ConcreateComponent具体待装饰者-初代马克战甲" class="headerlink" title="2.创建ConcreateComponent具体待装饰者,初代马克战甲"></a>2.创建ConcreateComponent具体待装饰者,初代马克战甲</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">package decorater;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Created by Abyss on 2017/5/2.</div><div class="line"> * description:初代马克战甲</div><div class="line"> */</div><div class="line">public class OriginalMark implements IMark&#123;</div><div class="line">    @Override</div><div class="line">    public int fightingCapacity() &#123;</div><div class="line">        return 5;//战5渣</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public String description() &#123;</div><div class="line">        return &quot;初代战甲&quot;;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="3-创建Decorator装饰者-超级装甲接口"><a href="#3-创建Decorator装饰者-超级装甲接口" class="headerlink" title="3.创建Decorator装饰者,超级装甲接口"></a>3.创建Decorator装饰者,超级装甲接口</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">package decorater;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Created by Abyss on 2017/5/2.</div><div class="line"> * description:超级装甲</div><div class="line"> */</div><div class="line">public interface ISuperMark extends IMark&#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="4-创建ConcreateDecorater-创建具体装甲"><a href="#4-创建ConcreateDecorater-创建具体装甲" class="headerlink" title="4.创建ConcreateDecorater,创建具体装甲"></a>4.创建ConcreateDecorater,创建具体装甲</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Created by Abyss on 2017/5/2.</div><div class="line"> * description:猎枪装甲 战斗力:259</div><div class="line"> */</div><div class="line">public class Mark40 implements ISuperMark &#123;</div><div class="line"></div><div class="line">    private IMark originalMark;</div><div class="line"></div><div class="line">    public Mark40(IMark originalMark) &#123;</div><div class="line">        this.originalMark = originalMark;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public int fightingCapacity() &#123;</div><div class="line">        return 259+originalMark.fightingCapacity();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public String description() &#123;</div><div class="line">        return originalMark.description()+&quot;添加...猎枪装甲&quot;;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Created by Abyss on 2017/5/2.</div><div class="line"> * description:浪子装甲 战斗力:300</div><div class="line"> */</div><div class="line">public class Mark42 implements ISuperMark &#123;</div><div class="line"></div><div class="line">    private IMark originalMark;</div><div class="line"></div><div class="line">    public Mark42(IMark originalMark) &#123;</div><div class="line">        this.originalMark = originalMark;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public int fightingCapacity() &#123;</div><div class="line">        return 300+originalMark.fightingCapacity();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public String description() &#123;</div><div class="line">        return originalMark.description()+&quot;添加...浪子装甲&quot;;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Created by Abyss on 2017/5/2.</div><div class="line"> * description:反浩克装甲 战斗力:500</div><div class="line"> */</div><div class="line">public class Mark44 implements ISuperMark &#123;</div><div class="line"></div><div class="line">    private IMark originalMark;</div><div class="line"></div><div class="line">    public Mark44(IMark originalMark) &#123;</div><div class="line">        this.originalMark = originalMark;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public int fightingCapacity() &#123;</div><div class="line">        return 500+originalMark.fightingCapacity();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public String description() &#123;</div><div class="line">        return originalMark.description()+&quot;添加...反浩克装甲&quot;;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="测试战甲"><a href="#测试战甲" class="headerlink" title="测试战甲"></a>测试战甲</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">public class Main &#123;</div><div class="line"></div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">    System.out.println(&quot;添加猎枪装甲&quot;);</div><div class="line">        OriginalMark originalMark = new OriginalMark();</div><div class="line">        IMark iMark = new Mark40(originalMark);</div><div class="line">        System.out.println(&quot;升级中...&quot;+iMark.description());</div><div class="line">        System.out.println(&quot;升级完毕,战斗力:&quot;+iMark.fightingCapacity());</div><div class="line">        System.out.println(&quot;-----------------&quot;);</div><div class="line">        System.out.println(&quot;添加浪子,反浩克装甲&quot;);</div><div class="line">        iMark = new Mark44(new Mark42(originalMark));</div><div class="line">        System.out.println(&quot;升级中...&quot;+iMark.description());</div><div class="line">        System.out.println(&quot;升级完毕,战斗力:&quot;+iMark.fightingCapacity());</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><img src="http://i4.buimg.com/567571/8fd43cdd9221a3b3.png" alt=""></p>
+<h2 id="拓展"><a href="#拓展" class="headerlink" title="拓展"></a>拓展</h2><h3 id="关于Android源码中装饰者的使用"><a href="#关于Android源码中装饰者的使用" class="headerlink" title="关于Android源码中装饰者的使用"></a>关于Android源码中装饰者的使用</h3><ul>
+<li><p>Context - 抽象组件</p>
+</li>
+<li><p>ContextImpl - 具体组件:继承自Context,实现了Context中的抽象方法;</p>
+</li>
+<li><p>ContextWrapper - 装饰者抽象:继承Context,定义了一些增强方法,内部持有Context引用</p>
+</li>
+<li><p>ContextThemeWrapper - 具体装饰者父类:实现了ContextWrapper中的抽象方法,提供一些通用实现</p>
+</li>
+<li><p>Activity,Service,Application - 具体装饰者实现类:实现全部的装饰方法</p>
+</li>
+</ul>
+<h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><ul>
+<li>装饰者和被装饰者有相同的接口（或有相同的父类）。</li>
+<li>装饰者保存了一个被装饰者的引用。</li>
+<li>在运行时动态地为对象添加属性，不必改变对象的结构。<br>使用装饰者模式的最大好处就是其拓展性十分良好，通过使用不同的装饰类来使得对象具有多种多样的属性，灵活性比直接继承好。然而它也有缺点，那就是会出现很多小类，即装饰类，使程序变得复杂。</li>
+</ul>
+<h2 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h2><p>到此我们打造了一套狂拽酷炫吊炸天的钢铁侠装甲,就差一点钱把它造出来了!</p>
+<p>不说了,赚钱去了~</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/装饰者模式/" rel="tag"># 装饰者模式</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/28/blogs/使用Markdown进行优雅的写作/" rel="prev" title="使用Markdown进行优雅的写作">
+                使用Markdown进行优雅的写作 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://i4.buimg.com/567571/3e920dd2ad03e598.jpg"
+               alt="Abyss" />
+          <p class="site-author-name" itemprop="name">Abyss</p>
+           
+              <p class="site-description motion-element" itemprop="description">灵魂歌者 | 意识流作家 | Geek</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/3372468724" target="_blank" title="weibo">
+                  
+                  weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景介绍"><span class="nav-number">1.</span> <span class="nav-text">背景介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定义"><span class="nav-number">2.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UML类图"><span class="nav-number">3.</span> <span class="nav-text">UML类图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#举个栗子"><span class="nav-number">4.</span> <span class="nav-text">举个栗子</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#现在我们有一套钢铁侠机甲-Mark-现在需要对机甲进行改造升级-就像"><span class="nav-number">4.0.1.</span> <span class="nav-text">现在我们有一套钢铁侠机甲(Mark),现在需要对机甲进行改造升级, 就像</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-创建Compnent-定义马克战甲的接口"><span class="nav-number">4.1.</span> <span class="nav-text">1. 创建Compnent,定义马克战甲的接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-创建ConcreateComponent具体待装饰者-初代马克战甲"><span class="nav-number">4.2.</span> <span class="nav-text">2.创建ConcreateComponent具体待装饰者,初代马克战甲</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-创建Decorator装饰者-超级装甲接口"><span class="nav-number">4.3.</span> <span class="nav-text">3.创建Decorator装饰者,超级装甲接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-创建ConcreateDecorater-创建具体装甲"><span class="nav-number">4.4.</span> <span class="nav-text">4.创建ConcreateDecorater,创建具体装甲</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试战甲"><span class="nav-number">4.5.</span> <span class="nav-text">测试战甲</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#拓展"><span class="nav-number">5.</span> <span class="nav-text">拓展</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#关于Android源码中装饰者的使用"><span class="nav-number">5.1.</span> <span class="nav-text">关于Android源码中装饰者的使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特点"><span class="nav-number">5.2.</span> <span class="nav-text">特点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结束语"><span class="nav-number">6.</span> <span class="nav-text">结束语</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Abyss</span>
+</div>
+
+
+<div class="powered-by">
+    个人专属
+</div>
+
+<div class="theme-info">
+  博客 -
+    NexT.Muse
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/three.min.js"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
