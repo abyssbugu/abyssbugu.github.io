@@ -1,0 +1,795 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="RxJava2," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="背景介绍 项目中大量使用了rxJava1,由于到2017年6月rxJava1将不再维护,关于升级rxJava2势在必行,同时我已做好心理准备,这个升级改动有点大呀…..">
+<meta name="keywords" content="RxJava2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从RxJava1到RxJava2的升级之旅">
+<meta property="og:url" content="http://yoursite.com/2017/05/04/blogs/从RxJava1到RxJava2的升级之旅/index.html">
+<meta property="og:site_name" content="Abyss's Blog">
+<meta property="og:description" content="背景介绍 项目中大量使用了rxJava1,由于到2017年6月rxJava1将不再维护,关于升级rxJava2势在必行,同时我已做好心理准备,这个升级改动有点大呀…..">
+<meta property="og:updated_time" content="2017-05-04T09:15:02.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="从RxJava1到RxJava2的升级之旅">
+<meta name="twitter:description" content="背景介绍 项目中大量使用了rxJava1,由于到2017年6月rxJava1将不再维护,关于升级rxJava2势在必行,同时我已做好心理准备,这个升级改动有点大呀…..">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/05/04/blogs/从RxJava1到RxJava2的升级之旅/"/>
+
+
+
+
+
+  <title>从RxJava1到RxJava2的升级之旅 | Abyss's Blog</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Abyss's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">我的征途是星辰大海</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/04/blogs/从RxJava1到RxJava2的升级之旅/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Abyss">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://i4.buimg.com/567571/3e920dd2ad03e598.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Abyss's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                从RxJava1到RxJava2的升级之旅
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-04T17:04:44+08:00">
+                2017-05-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/RxJava/" itemprop="url" rel="index">
+                    <span itemprop="name">RxJava</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>背景介绍</p>
+<p>项目中大量使用了rxJava1,由于到2017年6月rxJava1将不再维护,关于升级rxJava2势在必行,同时我已做好心理准备,这个升级改动有点大呀…..</p>
+<a id="more"></a>
+<h3 id="RxJava1与RxJava2的主要不同"><a href="#RxJava1与RxJava2的主要不同" class="headerlink" title="RxJava1与RxJava2的主要不同"></a>RxJava1与RxJava2的主要不同</h3><table>
+<thead>
+<tr>
+<th>描述</th>
+<th>rxJava1</th>
+<th>rxJava2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>包名改变</td>
+<td>rx.xxx</td>
+<td>io.reactivex.xxx</td>
+</tr>
+<tr>
+<td>ActionN 和 FuncN 改名</td>
+<td>Action0   Action1  Action2 Func  Func2</td>
+<td>Action Consumer BiConsumer Function BiFunction</td>
+</tr>
+<tr>
+<td>Observable.OnSubscribe改动</td>
+<td>Observable.OnSubscribe</td>
+<td>ObservableOnSubscribe</td>
+</tr>
+<tr>
+<td>ObservableOnSubscribe改动</td>
+<td>ObservableOnSubscribe</td>
+<td>ObservableEmitter</td>
+</tr>
+<tr>
+<td>Observable.Transformer改动</td>
+<td>Observable.Transformer</td>
+<td>ObservableTransformer</td>
+</tr>
+<tr>
+<td>Subscription 改名</td>
+<td>Subscription</td>
+<td>Disposable</td>
+</tr>
+<tr>
+<td>null值</td>
+<td>可传</td>
+<td>不可传</td>
+</tr>
+</tbody>
+</table>
+<p>还有跟多不同看这里<br> <a href="https://github.com/ReactiveX/RxJava/wiki/What&#39;s-different-in-2.0" target="_blank" rel="external">https://github.com/ReactiveX/RxJava/wiki/What’s-different-in-2.0</a></p>
+<p> 知道列表中的改动就可以动手升级了</p>
+<h3 id="gradle修改"><a href="#gradle修改" class="headerlink" title="gradle修改"></a>gradle修改</h3><p> 暴力点直接去除rxJava1及一些对应的库的所有依赖,全部升级为rxJava2的<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">compile &apos;io.reactivex.rxjava2:rxjava:2.1.0&apos;//rxJava2</div><div class="line">compile &apos;io.reactivex.rxjava2:rxandroid:2.0.1&apos;</div><div class="line">compile &apos;com.jakewharton.rxbinding2:rxbinding:2.0.0&apos;//rxbinding</div><div class="line">compile &apos;com.trello.rxlifecycle2:rxlifecycle:2.0.1&apos;//rxlifecycle</div><div class="line">compile &apos;com.trello.rxlifecycle2:rxlifecycle-android:2.0.1&apos;</div><div class="line">compile &apos;com.squareup.retrofit2:adapter-rxjava2:2.2.0&apos;//Retrofit</div></pre></td></tr></table></figure></p>
+<h3 id="针对Rxjava封装的框架修改"><a href="#针对Rxjava封装的框架修改" class="headerlink" title="针对Rxjava封装的框架修改"></a>针对Rxjava封装的框架修改</h3><p> 服务器结果处理<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"> public class RxHelper &#123;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 对服务器返回的结果做一些预先的处理</div><div class="line">     */</div><div class="line">    public static &lt;T&gt; ObservableTransformer&lt;HttpModle&lt;T&gt;, T&gt; handleResult() &#123;</div><div class="line">        return httpModleObservable -&gt; httpModleObservable.flatMap(tHttpModle -&gt; &#123;</div><div class="line">            if (tHttpModle.success()) &#123;</div><div class="line">                if (tHttpModle.data == null) &#123;</div><div class="line">                    return Observable.empty();//会直接走onComplete的回调</div><div class="line">                &#125;</div><div class="line">                return createDate(tHttpModle.data);</div><div class="line">            &#125; else &#123;</div><div class="line">                return Observable.error(new ServerException(tHttpModle.msg));</div><div class="line">            &#125;</div><div class="line">        &#125;).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static &lt;T&gt; Observable&lt;T&gt; createDate(final T data) &#123;</div><div class="line">        return Observable.create(subscriber -&gt; &#123;</div><div class="line">            try &#123;</div><div class="line">                subscriber.onNext(data);</div><div class="line">                subscriber.onComplete();</div><div class="line">            &#125; catch (Exception e) &#123;</div><div class="line">                subscriber.onError(e);</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p> 错误处理<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"> /**</div><div class="line"> * Created by Abyss on 2017/1/10.</div><div class="line"> * description:对错误进行处理</div><div class="line"> */</div><div class="line"></div><div class="line">public abstract class RxSubscribe&lt;T&gt; implements Observer&lt;T&gt; &#123;</div><div class="line">    @Override</div><div class="line">    public void onSubscribe(Disposable disposable) &#123;</div><div class="line">        //根据需要重写</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void onNext(T t) &#123;</div><div class="line">        _onNext(t);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void onError(Throwable e) &#123;</div><div class="line">        e.printStackTrace();</div><div class="line">        if (!NetworkUtil.isConnected(Utils.getContext())) &#123;</div><div class="line">            //网络未连接</div><div class="line">            _onError(Utils.getContext().getResources().getString(R.string.network_error_message));</div><div class="line">        &#125; else if (e instanceof ServerException) &#123;</div><div class="line">            //服务器错误 收到的都是除了200以外错误的状态码 或者可以加上errorinfo</div><div class="line">            _onError(e.getMessage());</div><div class="line">        &#125; else &#123;</div><div class="line">            //其他错误，404,连接超时,或自己的代码错误等</div><div class="line">            _onError(Utils.getContext().getResources().getString(R.string.connect_server_error));</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public  abstract void _onNext(T t);</div><div class="line"></div><div class="line">    public abstract void _onError(String message);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p> 线程切换<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"> /**</div><div class="line"> * Created by Abyss on 2017/5/4.</div><div class="line"> * description:统一的线程切换</div><div class="line"> */</div><div class="line"></div><div class="line">public class RxSchedulers &#123;</div><div class="line">    public static &lt;T&gt;ObservableTransformer&lt;T,T&gt; io_main() &#123;</div><div class="line">        return observable -&gt; observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static &lt;T&gt;ObservableTransformer&lt;T,T&gt; io() &#123;</div><div class="line">        return observable -&gt; observable.observeOn(Schedulers.io());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static &lt;T&gt;ObservableTransformer&lt;T,T&gt; main() &#123;</div><div class="line">        return observable -&gt; observable.observeOn(AndroidSchedulers.mainThread());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static &lt;T&gt;ObservableTransformer&lt;T,T&gt; computation() &#123;</div><div class="line">        return observable -&gt; observable.observeOn(Schedulers.computation());</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p> Retrofit客户端配置<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">public static ShowApi createShowApi() &#123;</div><div class="line">      if (showApi == null) &#123;</div><div class="line">          synchronized (RetrofitService.class) &#123;</div><div class="line">              if (showApi == null) &#123;</div><div class="line">                  initOkHttpClient();</div><div class="line">                  showApi = new Retrofit.Builder()</div><div class="line">                          .client(mOkHttpClient)</div><div class="line">                          .baseUrl(BizInterface.API)</div><div class="line">                          .addConverterFactory(GsonConverterFactory.create())</div><div class="line">                          .addCallAdapterFactory(RxJava2CallAdapterFactory.create())//支持rxjava2</div><div class="line">                          .build().create(ShowApi.class);</div><div class="line">              &#125;</div><div class="line">          &#125;</div><div class="line">      &#125;</div><div class="line">      return showApi;</div><div class="line">  &#125;</div></pre></td></tr></table></figure></p>
+<p> 由于名称变动,直接以Lambda替换,就不需要关心名称了,举个栗子:<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line">  * 初始化计时器</div><div class="line">  */</div><div class="line"> private void initTimer() &#123;</div><div class="line">     Observable.interval(1, TimeUnit.SECONDS, AndroidSchedulers.mainThread())</div><div class="line">             .take(SECOND)</div><div class="line">             .compose(this.bindToLifecycle())</div><div class="line">             .subscribe(aLong -&gt; &#123;//onNext</div><div class="line">                         if (aLong == 0)</div><div class="line">                             tvSendAuthCode.setTextColor(ContextCompat.getColor(getContext(), R.color.TC_2));</div><div class="line">                         RxTextView.text(tvSendAuthCode).accept((SECOND - aLong) + &quot;s&quot;);</div><div class="line">                     &#125;</div><div class="line">                     , e -&gt; &#123;//onError</div><div class="line">                     &#125;</div><div class="line">                     , () -&gt; &#123;//onComplete</div><div class="line">                         RxTextView.text(tvSendAuthCode).accept(&quot;重新发送&quot;);</div><div class="line">                         tvSendAuthCode.setTextColor(getResources().getColor(R.color.app_primary_color));</div><div class="line">                         RxView.enabled(tvSendAuthCode).accept(true);</div><div class="line">                     &#125;</div><div class="line">             );</div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
+<p> 请求网络<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 发送验证码</div><div class="line"> */</div><div class="line">public void requestNetForCode() &#123;</div><div class="line">    LoginModel.requestAuthCode(phone)</div><div class="line">            .compose(RxHelper.handleResult())</div><div class="line">            .compose(bindToLifecycle())</div><div class="line">            .subscribe(new RxSubscribe&lt;String&gt;() &#123;</div><div class="line">                @Override</div><div class="line">                public void _onNext(String s) &#123;</div><div class="line">                &#125;</div><div class="line"></div><div class="line">                @Override</div><div class="line">                public void _onError(String message) &#123;</div><div class="line">                    showRedTip(message);</div><div class="line">                &#125;</div><div class="line"></div><div class="line">                @Override</div><div class="line">                public void onComplete() &#123;</div><div class="line">                    initTimer();//初始化计时器</div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p> 其他的就是一些体力活了,能使用IDE自动替换的替换,不能替换的手动替换,愚公移山呀~</p>
+<h2 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h2><p> 花了整整一天的时间,放眼望去导航栏一片蓝.当然测试过程又踩了一些坑,不过最终还是成功升级到了rxJava2,考虑到rxJava2的不少新特性这次升级还是挺值得的~不过回头想想,我真是有毅力啊</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/RxJava2/" rel="tag"># RxJava2</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/02/blogs/装饰者模式--打造属于自己的钢铁侠战甲/" rel="prev" title="装饰者模式-打造属于自己的钢铁侠战甲">
+                装饰者模式-打造属于自己的钢铁侠战甲 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://i4.buimg.com/567571/3e920dd2ad03e598.jpg"
+               alt="Abyss" />
+          <p class="site-author-name" itemprop="name">Abyss</p>
+           
+              <p class="site-description motion-element" itemprop="description">灵魂歌者 | 意识流作家 | Geek</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/3372468724" target="_blank" title="weibo">
+                  
+                  weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#RxJava1与RxJava2的主要不同"><span class="nav-number">1.</span> <span class="nav-text">RxJava1与RxJava2的主要不同</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gradle修改"><span class="nav-number">2.</span> <span class="nav-text">gradle修改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#针对Rxjava封装的框架修改"><span class="nav-number">3.</span> <span class="nav-text">针对Rxjava封装的框架修改</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结束语"><span class="nav-number"></span> <span class="nav-text">结束语</span></a></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Abyss</span>
+</div>
+
+
+<div class="powered-by">
+    个人专属
+</div>
+
+<div class="theme-info">
+  博客 -
+    NexT.Muse
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/three.min.js"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
