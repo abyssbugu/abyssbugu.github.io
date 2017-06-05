@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="学习Kolin," />
+  <meta name="keywords" content="学习Kotlin," />
 
 
 
@@ -90,18 +90,18 @@
 
 
 
-<meta name="description" content="背景介绍 2017年 Google I/O 大会,将Kolin指定为android官方开发语言.整个android开发阵营刮起了Kolin的狂风.本人亦是万分欣喜,终于有一门新语言,可以将我从笨重的Java中解放出来了.拥有java基础学习Kolin并不难,官方文档还有各种学习资料已经写的非常详尽了.本篇文章将记录我学习Kolin以及重构项目的总结的一些Kolin需要注意的点">
-<meta name="keywords" content="学习Kolin">
+<meta name="description" content="背景介绍 2017年 Google I/O 大会,将Kotlin指定为android官方开发语言.整个android开发阵营刮起了Kolin的狂风.本人亦是万分欣喜,终于有一门新语言,可以将我从笨重的Java中解放出来了.拥有java基础学习Kolin并不难,官方文档还有各种学习资料已经写的非常详尽了.本篇文章将记录我学习Kolin以及重构项目的总结的一些Kolin需要注意的点">
+<meta name="keywords" content="学习Kotlin">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Kolin Note">
+<meta property="og:title" content="Kotlin Note">
 <meta property="og:url" content="http://yoursite.com/2017/06/05/blogs/KotlinNote/index.html">
 <meta property="og:site_name" content="Abyss's Blog">
-<meta property="og:description" content="背景介绍 2017年 Google I/O 大会,将Kolin指定为android官方开发语言.整个android开发阵营刮起了Kolin的狂风.本人亦是万分欣喜,终于有一门新语言,可以将我从笨重的Java中解放出来了.拥有java基础学习Kolin并不难,官方文档还有各种学习资料已经写的非常详尽了.本篇文章将记录我学习Kolin以及重构项目的总结的一些Kolin需要注意的点">
+<meta property="og:description" content="背景介绍 2017年 Google I/O 大会,将Kotlin指定为android官方开发语言.整个android开发阵营刮起了Kolin的狂风.本人亦是万分欣喜,终于有一门新语言,可以将我从笨重的Java中解放出来了.拥有java基础学习Kolin并不难,官方文档还有各种学习资料已经写的非常详尽了.本篇文章将记录我学习Kolin以及重构项目的总结的一些Kolin需要注意的点">
 <meta property="og:image" content="http://or2euhrwu.bkt.clouddn.com/17-6-5/10166427.jpg">
-<meta property="og:updated_time" content="2017-06-05T08:27:27.000Z">
+<meta property="og:updated_time" content="2017-06-05T09:03:29.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Kolin Note">
-<meta name="twitter:description" content="背景介绍 2017年 Google I/O 大会,将Kolin指定为android官方开发语言.整个android开发阵营刮起了Kolin的狂风.本人亦是万分欣喜,终于有一门新语言,可以将我从笨重的Java中解放出来了.拥有java基础学习Kolin并不难,官方文档还有各种学习资料已经写的非常详尽了.本篇文章将记录我学习Kolin以及重构项目的总结的一些Kolin需要注意的点">
+<meta name="twitter:title" content="Kotlin Note">
+<meta name="twitter:description" content="背景介绍 2017年 Google I/O 大会,将Kotlin指定为android官方开发语言.整个android开发阵营刮起了Kolin的狂风.本人亦是万分欣喜,终于有一门新语言,可以将我从笨重的Java中解放出来了.拥有java基础学习Kolin并不难,官方文档还有各种学习资料已经写的非常详尽了.本篇文章将记录我学习Kolin以及重构项目的总结的一些Kolin需要注意的点">
 <meta name="twitter:image" content="http://or2euhrwu.bkt.clouddn.com/17-6-5/10166427.jpg">
 
 
@@ -136,7 +136,7 @@
 
 
 
-  <title>Kolin Note | Abyss's Blog</title>
+  <title>Kotlin Note | Abyss's Blog</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -286,7 +286,7 @@
             
             
               
-                Kolin Note
+                Kotlin Note
               
             
           </h1>
@@ -324,8 +324,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Kolin/" itemprop="url" rel="index">
-                    <span itemprop="name">Kolin</span>
+                  <a href="/categories/Kotlin/" itemprop="url" rel="index">
+                    <span itemprop="name">Kotlin</span>
                   </a>
                 </span>
 
@@ -360,7 +360,7 @@
       
         <p><img src="http://or2euhrwu.bkt.clouddn.com/17-6-5/10166427.jpg" alt=""></p>
 <h2 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h2><blockquote>
-<p>2017年 Google I/O 大会,将Kolin指定为android官方开发语言.整个android开发阵营刮起了Kolin的狂风.本人亦是万分欣喜,终于有一门新语言,可以将我从笨重的Java中解放出来了.拥有java基础学习Kolin并不难,官方文档还有各种学习资料已经写的非常详尽了.本篇文章将记录我学习Kolin以及重构项目的总结的一些Kolin需要注意的点</p>
+<p>2017年 Google I/O 大会,将Kotlin指定为android官方开发语言.整个android开发阵营刮起了Kolin的狂风.本人亦是万分欣喜,终于有一门新语言,可以将我从笨重的Java中解放出来了.拥有java基础学习Kolin并不难,官方文档还有各种学习资料已经写的非常详尽了.本篇文章将记录我学习Kolin以及重构项目的总结的一些Kolin需要注意的点</p>
 </blockquote>
 <a id="more"></a>
 <h3 id="Kotlin-的空安全"><a href="#Kotlin-的空安全" class="headerlink" title="Kotlin 的空安全"></a>Kotlin 的空安全</h3><p> Kotlin有两种类型：一个是<strong>非空引用类型</strong>，一个是<strong>可空引用类型</strong>。<br>对于可空引用，如果希望调用它的成员变量或者成员函数，直接调用会出现编译错误，有三种方法可以调用： </p>
@@ -427,7 +427,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/学习Kolin/" rel="tag"># 学习Kolin</a>
+            <a href="/tags/学习Kotlin/" rel="tag"># 学习Kotlin</a>
           
         </div>
       
