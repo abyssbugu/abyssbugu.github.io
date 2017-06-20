@@ -1,0 +1,776 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="环境配置," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="使用nvm管理node与 npm12nvm install v4.2.3nvm alias default v4.2.3 安装切换各版本 node/npm1234567891011nvm install stable #安装最新稳定版nvm install 4.2.2 #安装 4.2.2 版本nvm install 0.12.7 #安装 0.12.7 版本# 特别说明：以下模块安装仅供演示说明，">
+<meta name="keywords" content="环境配置">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React-Native在mac下的环境配置">
+<meta property="og:url" content="http://yoursite.com/2017/06/20/blogs/React-Native在mac下的环境配置/index.html">
+<meta property="og:site_name" content="Abyss's Blog">
+<meta property="og:description" content="使用nvm管理node与 npm12nvm install v4.2.3nvm alias default v4.2.3 安装切换各版本 node/npm1234567891011nvm install stable #安装最新稳定版nvm install 4.2.2 #安装 4.2.2 版本nvm install 0.12.7 #安装 0.12.7 版本# 特别说明：以下模块安装仅供演示说明，">
+<meta property="og:image" content="http://or2euhrwu.bkt.clouddn.com/17-6-19/12562412.jpg">
+<meta property="og:image" content="http://or2euhrwu.bkt.clouddn.com/17-6-20/36361596.jpg">
+<meta property="og:updated_time" content="2017-06-20T02:28:20.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="React-Native在mac下的环境配置">
+<meta name="twitter:description" content="使用nvm管理node与 npm12nvm install v4.2.3nvm alias default v4.2.3 安装切换各版本 node/npm1234567891011nvm install stable #安装最新稳定版nvm install 4.2.2 #安装 4.2.2 版本nvm install 0.12.7 #安装 0.12.7 版本# 特别说明：以下模块安装仅供演示说明，">
+<meta name="twitter:image" content="http://or2euhrwu.bkt.clouddn.com/17-6-19/12562412.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/06/20/blogs/React-Native在mac下的环境配置/"/>
+
+
+
+
+
+  <title>React-Native在mac下的环境配置 | Abyss's Blog</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Abyss's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">我的征途是星辰大海</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/20/blogs/React-Native在mac下的环境配置/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Abyss">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://i4.buimg.com/567571/3e920dd2ad03e598.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Abyss's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                React-Native在mac下的环境配置
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-20T10:23:03+08:00">
+                2017-06-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/React-Native/" itemprop="url" rel="index">
+                    <span itemprop="name">React Native</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <a id="more"></a>
+<h3 id="使用nvm管理node与-npm"><a href="#使用nvm管理node与-npm" class="headerlink" title="使用nvm管理node与 npm"></a>使用nvm管理node与 npm</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">nvm install v4.2.3</div><div class="line">nvm alias default v4.2.3</div></pre></td></tr></table></figure>
+<h3 id="安装切换各版本-node-npm"><a href="#安装切换各版本-node-npm" class="headerlink" title="安装切换各版本 node/npm"></a>安装切换各版本 node/npm</h3><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">nvm install stable #安装最新稳定版</div><div class="line">nvm install 4.2.2 #安装 4.2.2 版本</div><div class="line">nvm install 0.12.7 #安装 0.12.7 版本</div><div class="line"></div><div class="line"># 特别说明：以下模块安装仅供演示说明，并非必须安装模块</div><div class="line">nvm use 0 #切换至 0.12.7 版本</div><div class="line">npm install -g mz-fis #安装 mz-fis 模块至全局目录，安装完成的路径是 /Users/&lt;你的用户名&gt;/.nvm/versions/node/v0.12.7/lib/mz-fis</div><div class="line">nvm use 4 #切换至 4.2.2 版本</div><div class="line">npm install -g react-native-cli #安装 react-native-cli 模块至全局目录，安装完成的路径是 /Users/&lt;你的用户名&gt;/.nvm/versions/node/v4.2.2/lib/react-native-cli</div><div class="line"></div><div class="line">nvm alias default 0.12.7 #设置默认 node 版本为 0.12.7</div></pre></td></tr></table></figure>
+<h3 id="使用-nvmrc-文件配置项目所使用的-node-版本"><a href="#使用-nvmrc-文件配置项目所使用的-node-版本" class="headerlink" title="使用 .nvmrc 文件配置项目所使用的 node 版本"></a>使用 .nvmrc 文件配置项目所使用的 node 版本</h3><p>如果你的默认 node 版本（通过 nvm alias 命令设置的）与项目所需的版本不同，则可在项目根目录或其任意父级目录中创建 .nvmrc 文件，在文件中指定使用的 node 版本号，例如：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">cd &lt;项目根目录&gt;  #进入项目根目录</div><div class="line">echo 4 &gt; .nvmrc #添加 .nvmrc 文件</div><div class="line">nvm use #无需指定版本号，会自动使用 .nvmrc 文件中配置的版本</div><div class="line">node -v #查看 node 是否切换为对应版本</div></pre></td></tr></table></figure></p>
+<h3 id="安装node-js"><a href="#安装node-js" class="headerlink" title="安装node.js"></a>安装node.js</h3><p><code>brew install node</code></p>
+<h3 id="Yarn、React-Native的命令行工具（react-native-cli）"><a href="#Yarn、React-Native的命令行工具（react-native-cli）" class="headerlink" title="Yarn、React Native的命令行工具（react-native-cli）"></a>Yarn、React Native的命令行工具（react-native-cli）</h3><p>Yarn是Facebook提供的替代npm的工具，可以加速node模块的下载。React Native的命令行工具用于执行创建、初始化、更新项目、运行打包服务（packager）等任务。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install -g yarn react-native-cli</div></pre></td></tr></table></figure>
+<p>安装完yarn后同理也要设置镜像源：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">yarn config set registry https:<span class="comment">//registry.npm.taobao.org --global</span></div><div class="line">yarn config set disturl https:<span class="comment">//npm.taobao.org/dist --global</span></div></pre></td></tr></table></figure></p>
+<h3 id="添加Android-SDK到环境变量中"><a href="#添加Android-SDK到环境变量中" class="headerlink" title="添加Android SDK到环境变量中"></a>添加Android SDK到环境变量中</h3><p>打开 .bash_profile<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">GRADLE_HOME=<span class="regexp">/Users/</span>abyss/gradle/gradle<span class="number">-3.3</span></div><div class="line">ANDROID_HOME=<span class="regexp">/Users/</span>abyss/Library/Android/sdk</div><div class="line"><span class="keyword">export</span> GRADLE_HOME</div><div class="line"><span class="keyword">export</span> ANDROID_HOME</div><div class="line"><span class="keyword">export</span> PATH=$PATH:$GRADLE_HOME/bin:$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools</div></pre></td></tr></table></figure></p>
+<h3 id="推荐安装的工具"><a href="#推荐安装的工具" class="headerlink" title="推荐安装的工具"></a>推荐安装的工具</h3><h4 id="Watchman"><a href="#Watchman" class="headerlink" title="Watchman"></a>Watchman</h4><p>Watchman是由Facebook提供的监视文件系统变更的工具。安装此工具可以提高开发时的性能（packager可以快速捕捉文件的变化从而实现实时刷新）。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew install watchman</div></pre></td></tr></table></figure>
+<h3 id="测试程序"><a href="#测试程序" class="headerlink" title="测试程序"></a>测试程序</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">react-native init FirstApp</div><div class="line">cd FirstApp</div></pre></td></tr></table></figure>
+<h4 id="运行android"><a href="#运行android" class="headerlink" title="运行android"></a>运行android</h4><p>打开index.android.js并随便改上几行</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">react-native run-android</div></pre></td></tr></table></figure>
+<p><img src="http://or2euhrwu.bkt.clouddn.com/17-6-19/12562412.jpg" alt=""></p>
+<h4 id="运行ios"><a href="#运行ios" class="headerlink" title="运行ios"></a>运行ios</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">react-native run-ios</div></pre></td></tr></table></figure>
+<p>出现错误log显示:</p>
+<blockquote>
+<p>“:CFBundleIdentifier”, Does Not Exist</p>
+</blockquote>
+<p>这种错误去网上搜索一堆办法基本没用,因为需要针对性的查询.打开xcode,查看编译错误</p>
+<h3 id="‘boost-iterator-iterator-adaptor-hpp’-file-not-found"><a href="#‘boost-iterator-iterator-adaptor-hpp’-file-not-found" class="headerlink" title="‘boost/iterator/iterator_adaptor.hpp’ file not found"></a>‘boost/iterator/iterator_adaptor.hpp’ file not found</h3><p>产生原因：</p>
+<ul>
+<li>/Users/abyss/.rncache 中 boost_1_63_0.tar.gz， double-conversion-1.1.5.tar.gz， folly-2016.09.26.00.tar.gz， glog-0.3.4.tar.gz 文件下载不完整</li>
+<li>node_modules/react-native/third-party 文件不完整</li>
+</ul>
+<p>解决方案:</p>
+<ol>
+<li>删除 .rncache 后重新下载，或<a href="https://pan.baidu.com/s/1kU6Q43X" target="_blank" rel="external">手动下载</a>后放入 .rncache 中</li>
+<li>把以上文件解压后放入 node_modules/react-native/third-party 下</li>
+<li>Clean &amp; Build</li>
+</ol>
+<p>运行成功</p>
+<p><img src="http://or2euhrwu.bkt.clouddn.com/17-6-20/36361596.jpg" alt=""></p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ol>
+<li><a href="http://reactnative.cn/docs/0.45/getting-started.html#content" target="_blank" rel="external">ReactNative中文网</a></li>
+<li><a href="http://vanessa.b3log.org/articles/2017/06/12/1497235254333.html" target="_blank" rel="external">异常解决</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/环境配置/" rel="tag"># 环境配置</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/05/blogs/KotlinNote/" rel="prev" title="Kotlin Note">
+                Kotlin Note <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://i4.buimg.com/567571/3e920dd2ad03e598.jpg"
+               alt="Abyss" />
+          <p class="site-author-name" itemprop="name">Abyss</p>
+           
+              <p class="site-description motion-element" itemprop="description">灵魂歌者 | 意识流作家 | Geek</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/3372468724" target="_blank" title="weibo">
+                  
+                  weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用nvm管理node与-npm"><span class="nav-number">1.</span> <span class="nav-text">使用nvm管理node与 npm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装切换各版本-node-npm"><span class="nav-number">2.</span> <span class="nav-text">安装切换各版本 node/npm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-nvmrc-文件配置项目所使用的-node-版本"><span class="nav-number">3.</span> <span class="nav-text">使用 .nvmrc 文件配置项目所使用的 node 版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装node-js"><span class="nav-number">4.</span> <span class="nav-text">安装node.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Yarn、React-Native的命令行工具（react-native-cli）"><span class="nav-number">5.</span> <span class="nav-text">Yarn、React Native的命令行工具（react-native-cli）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加Android-SDK到环境变量中"><span class="nav-number">6.</span> <span class="nav-text">添加Android SDK到环境变量中</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#推荐安装的工具"><span class="nav-number">7.</span> <span class="nav-text">推荐安装的工具</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Watchman"><span class="nav-number">7.1.</span> <span class="nav-text">Watchman</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试程序"><span class="nav-number">8.</span> <span class="nav-text">测试程序</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#运行android"><span class="nav-number">8.1.</span> <span class="nav-text">运行android</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#运行ios"><span class="nav-number">8.2.</span> <span class="nav-text">运行ios</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#‘boost-iterator-iterator-adaptor-hpp’-file-not-found"><span class="nav-number">9.</span> <span class="nav-text">‘boost/iterator/iterator_adaptor.hpp’ file not found</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">10.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Abyss</span>
+</div>
+
+
+<div class="powered-by">
+    个人专属
+</div>
+
+<div class="theme-info">
+  博客 -
+    NexT.Muse
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/three.min.js"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
