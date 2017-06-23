@@ -1,0 +1,781 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="设计模式," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="背景介绍Kotlin 正在得到越来越广泛的应用。如果把常用的设计模式用 Kotlin 来实现会是什么样子呢？">
+<meta name="keywords" content="设计模式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在Kotlin中使用设计模式">
+<meta property="og:url" content="http://yoursite.com/2017/06/23/blogs/在Kotlin中使用设计模式/index.html">
+<meta property="og:site_name" content="Abyss's Blog">
+<meta property="og:description" content="背景介绍Kotlin 正在得到越来越广泛的应用。如果把常用的设计模式用 Kotlin 来实现会是什么样子呢？">
+<meta property="og:image" content="http://or2euhrwu.bkt.clouddn.com/17-6-23/90457843.jpg">
+<meta property="og:updated_time" content="2017-06-23T03:12:26.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="在Kotlin中使用设计模式">
+<meta name="twitter:description" content="背景介绍Kotlin 正在得到越来越广泛的应用。如果把常用的设计模式用 Kotlin 来实现会是什么样子呢？">
+<meta name="twitter:image" content="http://or2euhrwu.bkt.clouddn.com/17-6-23/90457843.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/06/23/blogs/在Kotlin中使用设计模式/"/>
+
+
+
+
+
+  <title>在Kotlin中使用设计模式 | Abyss's Blog</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Abyss's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">我的征途是星辰大海</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/23/blogs/在Kotlin中使用设计模式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Abyss">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://i4.buimg.com/567571/3e920dd2ad03e598.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Abyss's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                在Kotlin中使用设计模式
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-23T11:09:00+08:00">
+                2017-06-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Kolin/" itemprop="url" rel="index">
+                    <span itemprop="name">Kolin</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="http://or2euhrwu.bkt.clouddn.com/17-6-23/90457843.jpg" alt=""></p>
+<h2 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h2><p>Kotlin 正在得到越来越广泛的应用。如果把常用的设计模式用 Kotlin 来实现会是什么样子呢？</p>
+<a id="more"></a>
+<p><a href="https://dev.to/lovis/gang-of-four-patterns-in-kotlin" target="_blank" rel="external">原文地址</a></p>
+<p><a href="https://github.com/xitu/gold-miner" target="_blank" rel="external">译文出自: 掘金翻译计划</a></p>
+<h2 id="结构型设计模式"><a href="#结构型设计模式" class="headerlink" title="结构型设计模式"></a>结构型设计模式</h2><h3 id="装饰器模式（Decorator）"><a href="#装饰器模式（Decorator）" class="headerlink" title="装饰器模式（Decorator）"></a>装饰器模式（Decorator）</h3><blockquote>
+<p>动态地给对象添加行为（职责）</p>
+</blockquote>
+<p>假设我们想用一些特效（duang）来装饰 Text 这个类：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Text</span></span>(<span class="keyword">val</span> text: String) &#123;</div><div class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">draw</span><span class="params">()</span></span> = print(text)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在 Kotlin 中，我们可以用 函数拓展（extension functions） ：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">fun</span> Text.<span class="title">underline</span><span class="params">(decorated: <span class="type">Text</span>.()</span></span> -&gt; <span class="built_in">Unit</span>) &#123;</div><div class="line">    print(<span class="string">"_"</span>)</div><div class="line">    <span class="keyword">this</span>.decorated()</div><div class="line">    print(<span class="string">"_"</span>)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">fun</span> Text.<span class="title">background</span><span class="params">(decorated: <span class="type">Text</span>.()</span></span> -&gt; <span class="built_in">Unit</span>) &#123;</div><div class="line">    print(<span class="string">"\u001B[43m"</span>)</div><div class="line">    <span class="keyword">this</span>.decorated()</div><div class="line">    print(<span class="string">"\u001B[0m"</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>有了这些拓展函数，我们现在可以实例化一个 Text 对象，并且在不创建其他类的情况下来修饰它的 draw 方法：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Text(<span class="string">"Hello"</span>).run &#123;</div><div class="line">    background &#123;</div><div class="line">        underline &#123;</div><div class="line">            draw()</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>跟原本的装饰者相比，这里有一个不足：由于没有用来装饰的类了，所以我们不能使用“预装饰”过的对象了。可以再次使用函数来解决这个问题，函数是 Kotlin 中的“一等公民”。我们可以这样写：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">fun</span> <span class="title">preDecorated</span><span class="params">(decorated: <span class="type">Text</span>.()</span></span> -&gt; <span class="built_in">Unit</span>): Text.() -&gt; <span class="built_in">Unit</span> &#123;</div><div class="line">    <span class="keyword">return</span> &#123; background &#123; underline &#123; decorated() &#125; &#125; &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="创建型设计模式"><a href="#创建型设计模式" class="headerlink" title="创建型设计模式"></a>创建型设计模式</h2><h3 id="Builder-模式"><a href="#Builder-模式" class="headerlink" title="Builder 模式"></a>Builder 模式</h3><blockquote>
+<p>将复杂对象的构造与其表示分开，以便相同的构造过程可以创建不同形式的对象</p>
+</blockquote>
+<p>Builder 模式很好用，可以避免臃肿的构造函数参数列表，还能方便地复用预先定义好的配置对象的代码。 Kotlin 的 apply 扩展原生支持 Builder 模式。</p>
+<p>假设有一个 Car 类：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Car</span></span>() &#123;</div><div class="line">    <span class="keyword">var</span> color: String = <span class="string">"red"</span></div><div class="line">    <span class="keyword">var</span> doors = <span class="number">3</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>除了为这个类单独创建一个 CarBuilder ，我们可以使用 apply（also 也行）拓展来初始化一辆车：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Car().apply &#123;</div><div class="line">    color = <span class="string">"yellow"</span></div><div class="line">    doors = <span class="number">5</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>由于函数可以赋值给一个变量，所以这个初始化过程也可以放在一个变量里。这样，我们就有了一个预先定义好的 Builder “函数”，比如 val yellowCar: Car.() -&gt; Unit = { color = “yellow” }</p>
+<h3 id="原型模式（Prototype）"><a href="#原型模式（Prototype）" class="headerlink" title="原型模式（Prototype）"></a>原型模式（Prototype）</h3><blockquote>
+<p>使用原型化的实例指定要创建的对象的种类，并通过复制此实例来创建特定的新对象</p>
+</blockquote>
+<p>在 Java 中，原型模式理论上可以用 Cloneable 接口和 Object.clone() 来实现。然而，clone 有很大的不足，所以我们应该避免使用它。</p>
+<p>Kotlin 用数据类（data classes）提供了解决方案。</p>
+<p>当使用数据类的时候，我们将免费得到 equals、hashCode、toString 和 copy 这几个函数。通过 copy，我们可以复制一整个对象并且修改所得到的新对象的一些属性。<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">data</span> <span class="class"><span class="keyword">class</span> <span class="title">EMail</span></span>(<span class="keyword">var</span> recipient: String, <span class="keyword">var</span> subject: String?, <span class="keyword">var</span> message: String?)</div><div class="line">...</div><div class="line"></div><div class="line"><span class="keyword">val</span> mail = EMail(<span class="string">"abc@example.com"</span>, <span class="string">"Hello"</span>, <span class="string">"Don't know what to write."</span>)</div><div class="line"></div><div class="line"><span class="keyword">val</span> copy = mail.copy(recipient = <span class="string">"other@example.com"</span>)</div><div class="line"></div><div class="line">println(<span class="string">"Email1 goes to "</span> + mail.recipient + <span class="string">" with subject "</span> + mail.subject)</div><div class="line">println(<span class="string">"Email2 goes to "</span> + copy.recipient + <span class="string">" with subject "</span> + copy.subject)</div></pre></td></tr></table></figure></p>
+<h3 id="单例模式（Singleton）"><a href="#单例模式（Singleton）" class="headerlink" title="单例模式（Singleton）"></a>单例模式（Singleton）</h3><blockquote>
+<p>确保一个类只有一个实例，并提供这个实例的全局访问点</p>
+</blockquote>
+<p>在 Java 中创建 单例 还是需要一番操作的，但是在 Kotlin 中只需要简单的使用 object 声明就可以了。<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">object</span> Dictionary &#123;</div><div class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">addDefinition</span><span class="params">(word: <span class="type">String</span>, definition: <span class="type">String</span>)</span></span> &#123;</div><div class="line">        definitions.put(word.toLowerCase(), definition)</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">getDefinition</span><span class="params">(word: <span class="type">String</span>)</span></span>: String &#123;</div><div class="line">        <span class="keyword">return</span> definitions[word.toLowerCase()] ?: <span class="string">""</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这里使用的 object 关键词会自动创建出 Dictionary 这个类以及它的一个单例。这个单例以“懒汉模式”创建，用到它时才会进行创建。</p>
+<p>单例的访问方式和 Java 的静态方法差不多：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">val</span> word = <span class="string">"kotlin"</span></div><div class="line">Dictionary.addDefinition(word, <span class="string">"an awesome programming language created by JetBrains"</span>)</div><div class="line">println(word + <span class="string">" is "</span> + Dictionary.getDefinition(word))</div></pre></td></tr></table></figure></p>
+<h2 id="行为型设计模式"><a href="#行为型设计模式" class="headerlink" title="行为型设计模式"></a>行为型设计模式</h2><h3 id="模板方法（Template-Method）"><a href="#模板方法（Template-Method）" class="headerlink" title="模板方法（Template Method）"></a>模板方法（Template Method）</h3><p>在操作中定义算法（步骤）的骨架，将一些步骤委托给子类<br>这个设计模式同时用到了类的继承。定义一些 抽象方法 并且在基类调用这些方法。抽象方法由子类负责实现。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//java</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Task</span> </span>&#123;</div><div class="line">        <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">work</span><span class="params">()</span></span>;</div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">execute</span><span class="params">()</span></span>&#123;</div><div class="line">            beforeWork();</div><div class="line">            work();</div><div class="line">            afterWork();</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>现在从 Task 派生出一个在 work 方法中真正做了事情的具体类。</p>
+<p>和 装饰器模式 使用函数拓展类似，这里的 模板方法 通过顶层函数实现。<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//kotlin</span></div><div class="line"><span class="function"><span class="keyword">fun</span> <span class="title">execute</span><span class="params">(task: ()</span></span> -&gt; <span class="built_in">Unit</span>) &#123;</div><div class="line">    <span class="keyword">val</span> startTime = System.currentTimeMillis() <span class="comment">//"beforeWork()"</span></div><div class="line">    task()</div><div class="line">    println(<span class="string">"Work took <span class="subst">$&#123;System.currentTimeMillis() - startTime&#125;</span> millis"</span>) <span class="comment">//"afterWork()"</span></div><div class="line">&#125;</div><div class="line">...</div><div class="line"><span class="comment">//usage:</span></div><div class="line">execute &#123;</div><div class="line">    println(<span class="string">"I'm working here!"</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>看，根本没有必要写任何类！有人可能会有疑问，这不是 策略模式 吗，这个疑问不无道理。从另一方面来看，策略模式 和 模板方法 确实在解决很相似的问题（如果有什么不同）。</p>
+<h3 id="策略模式（Strategy）"><a href="#策略模式（Strategy）" class="headerlink" title="策略模式（Strategy）"></a>策略模式（Strategy）</h3><blockquote>
+<p>定义一系列算法，封装每个算法，并使它们可以互换</p>
+</blockquote>
+<p>有一些 Customer ，他们每个月都要付一笔特定的费用。对于某些特定的人，这笔费用可以打折。我们不去为每种打折 策略 都去写一个对应的 Customer 子类，而是采用 策略模式。<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Customer</span></span>(<span class="keyword">val</span> name: String, <span class="keyword">val</span> fee: <span class="built_in">Double</span>, <span class="keyword">val</span> discount: (<span class="built_in">Double</span>) -&gt; <span class="built_in">Double</span>) &#123;</div><div class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">pricePerMonth</span><span class="params">()</span></span>: <span class="built_in">Double</span> &#123;</div><div class="line">        <span class="keyword">return</span> discount(fee)</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>注意这里没有使用接口，而是使用 (Double) -&gt; Double （Double 到 Double）的函数来替代。为了使这个变换看上去有意义，我们可以声明一个类型别名，这样也不失高阶函数的灵活性： typealias Discount = (Double) -&gt; Double.</p>
+<p>无论哪种方式，我都可以定义多种 策略 来计算折扣。<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">val</span> studentDiscount = &#123; fee: <span class="built_in">Double</span> -&gt; fee/<span class="number">2</span> &#125;</div><div class="line"><span class="keyword">val</span> noDiscount = &#123; fee: <span class="built_in">Double</span> -&gt; fee &#125;</div><div class="line">...</div><div class="line"></div><div class="line"><span class="keyword">val</span> student = Customer(<span class="string">"Ned"</span>, <span class="number">10.0</span>, studentDiscount)</div><div class="line"><span class="keyword">val</span> regular = Customer(<span class="string">"John"</span>, <span class="number">10.0</span>, noDiscount)</div><div class="line"></div><div class="line">println(<span class="string">"<span class="subst">$&#123;student.name&#125;</span> pays %.2f per month"</span>.format(student.pricePerMonth()))</div><div class="line">println(<span class="string">"<span class="subst">$&#123;regular.name&#125;</span> pays %.2f per month"</span>.format(regular.pricePerMonth()))</div></pre></td></tr></table></figure></p>
+<h3 id="迭代器模式（Iterator）"><a href="#迭代器模式（Iterator）" class="headerlink" title="迭代器模式（Iterator）"></a>迭代器模式（Iterator）</h3><p>提供了一种在不暴露其底层表示的情况下顺序访问聚合对象内部元素的方法<br>其实很难遇到需要手搓一个 迭代器 的情况。大多数情况，包装一个 List 并且实现 Iterable接口要更简单方便。</p>
+<p>在 Kotlin 中， iterator() 是个操作符函数。这意味着当一个类定义了 operator fun iterator() 这个函数后，可以使用 for 循环来遍历它（不需要声明接口）。这个函数也能通过拓展函数配合使用，这是很酷炫的。 通过拓展函数，我们可以让 每一个 对象都是可迭代的。看下面这个例子：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Sentence</span></span>(<span class="keyword">val</span> words: List&lt;String&gt;)</div><div class="line">...</div><div class="line"><span class="keyword">operator</span> <span class="function"><span class="keyword">fun</span> Sentence.<span class="title">iterator</span><span class="params">()</span></span>: Iterator&lt;String&gt; = words.iterator()</div></pre></td></tr></table></figure></p>
+<p>现在我们可以在 Sentence 上进行迭代操作了。如果没有这个类的控制权的话，迭代器仍然将正常工作。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/设计模式/" rel="tag"># 设计模式</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/20/blogs/React-Native在mac下的环境配置/" rel="prev" title="ReactNative在mac下的环境配置">
+                ReactNative在mac下的环境配置 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://i4.buimg.com/567571/3e920dd2ad03e598.jpg"
+               alt="Abyss" />
+          <p class="site-author-name" itemprop="name">Abyss</p>
+           
+              <p class="site-description motion-element" itemprop="description">灵魂歌者 | 意识流作家 | Geek</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/3372468724" target="_blank" title="weibo">
+                  
+                  weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景介绍"><span class="nav-number">1.</span> <span class="nav-text">背景介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结构型设计模式"><span class="nav-number">2.</span> <span class="nav-text">结构型设计模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#装饰器模式（Decorator）"><span class="nav-number">2.1.</span> <span class="nav-text">装饰器模式（Decorator）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建型设计模式"><span class="nav-number">3.</span> <span class="nav-text">创建型设计模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Builder-模式"><span class="nav-number">3.1.</span> <span class="nav-text">Builder 模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原型模式（Prototype）"><span class="nav-number">3.2.</span> <span class="nav-text">原型模式（Prototype）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#单例模式（Singleton）"><span class="nav-number">3.3.</span> <span class="nav-text">单例模式（Singleton）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#行为型设计模式"><span class="nav-number">4.</span> <span class="nav-text">行为型设计模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#模板方法（Template-Method）"><span class="nav-number">4.1.</span> <span class="nav-text">模板方法（Template Method）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#策略模式（Strategy）"><span class="nav-number">4.2.</span> <span class="nav-text">策略模式（Strategy）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#迭代器模式（Iterator）"><span class="nav-number">4.3.</span> <span class="nav-text">迭代器模式（Iterator）</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Abyss</span>
+</div>
+
+
+<div class="powered-by">
+    个人专属
+</div>
+
+<div class="theme-info">
+  博客 -
+    NexT.Muse
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/three.min.js"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
