@@ -1,0 +1,752 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Builder模式," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="背景介绍 Builder模式, 是一种创建型的设计模式.通常用来将一个复杂的对象的构造过程分离, 让使用者可以根据需要选择创建过程.另外, 当这个复杂的对象的构造包含很多可选参数时, 那Builder模式可以说是不二之选了.作为Java/Android开发者, 如果你想设计一个通用的库, Builder模式几乎肯定是会用到的, 我们需要提供良好的入口/接口来使用者可以弹性地构造他们需要的对象">
+<meta name="keywords" content="Builder模式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Builder模式-使用DialogFragment">
+<meta property="og:url" content="http://yoursite.com/2017/07/26/blogs/Builder模式--使用DialogFragment/index.html">
+<meta property="og:site_name" content="Abyss's Blog">
+<meta property="og:description" content="背景介绍 Builder模式, 是一种创建型的设计模式.通常用来将一个复杂的对象的构造过程分离, 让使用者可以根据需要选择创建过程.另外, 当这个复杂的对象的构造包含很多可选参数时, 那Builder模式可以说是不二之选了.作为Java/Android开发者, 如果你想设计一个通用的库, Builder模式几乎肯定是会用到的, 我们需要提供良好的入口/接口来使用者可以弹性地构造他们需要的对象">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2016/11/29/2ea8453364905dacd2d3c427d4fba317.jpg">
+<meta property="og:updated_time" content="2017-07-26T02:58:51.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Builder模式-使用DialogFragment">
+<meta name="twitter:description" content="背景介绍 Builder模式, 是一种创建型的设计模式.通常用来将一个复杂的对象的构造过程分离, 让使用者可以根据需要选择创建过程.另外, 当这个复杂的对象的构造包含很多可选参数时, 那Builder模式可以说是不二之选了.作为Java/Android开发者, 如果你想设计一个通用的库, Builder模式几乎肯定是会用到的, 我们需要提供良好的入口/接口来使用者可以弹性地构造他们需要的对象">
+<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2016/11/29/2ea8453364905dacd2d3c427d4fba317.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/07/26/blogs/Builder模式--使用DialogFragment/"/>
+
+
+
+
+
+  <title>Builder模式-使用DialogFragment | Abyss's Blog</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Abyss's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">我的征途是星辰大海</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/26/blogs/Builder模式--使用DialogFragment/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Abyss">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://i4.buimg.com/567571/3e920dd2ad03e598.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Abyss's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Builder模式-使用DialogFragment
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-26T10:55:55+08:00">
+                2017-07-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/设计模式/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://user-gold-cdn.xitu.io/2016/11/29/2ea8453364905dacd2d3c427d4fba317.jpg" alt=""> </p>
+<h2 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h2><blockquote>
+<p>Builder模式, 是一种创建型的设计模式.<br>通常用来将一个复杂的对象的构造过程分离, 让使用者可以根据需要选择创建过程.<br>另外, 当这个复杂的对象的构造包含很多可选参数时, 那Builder模式可以说是不二之选了.<br>作为Java/Android开发者, 如果你想设计一个通用的库, Builder模式几乎肯定是会用到的, 我们需要提供良好的入口/接口来使用者可以弹性地构造他们需要的对象</p>
+</blockquote>
+<a id="more"></a>
+<h3 id="例子："><a href="#例子：" class="headerlink" title="例子："></a>例子：</h3><blockquote>
+<p>像一些优秀的开源库, 例如Glide, OkHttp等都在构造Glide, OkHttpClient时用到Builder模式<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OkHttpClient</span> <span class="keyword">implements</span> <span class="title">Cloneable</span>, <span class="title">Call</span>.<span class="title">Factory</span> </span>&#123;</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="title">OkHttpClient</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">this</span>(<span class="keyword">new</span> Builder());</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">private</span> <span class="title">OkHttpClient</span><span class="params">(Builder builder)</span> </span>&#123;</div><div class="line">    <span class="keyword">this</span>.dispatcher = builder.dispatcher;</div><div class="line">    <span class="keyword">this</span>.proxy = builder.proxy;</div><div class="line">    <span class="keyword">this</span>.protocols = builder.protocols;</div><div class="line">    <span class="keyword">this</span>.connectionSpecs = builder.connectionSpecs;</div><div class="line">    <span class="keyword">this</span>.interceptors = Util.immutableList(builder.interceptors);</div><div class="line">    <span class="keyword">this</span>.networkInterceptors = Util.immutableList(builder.networkInterceptors);</div><div class="line">    <span class="keyword">this</span>.proxySelector = builder.proxySelector;</div><div class="line">    <span class="keyword">this</span>.cookieJar = builder.cookieJar;</div><div class="line">    <span class="keyword">this</span>.cache = builder.cache;</div><div class="line">    <span class="keyword">this</span>.internalCache = builder.internalCache;</div><div class="line">    <span class="keyword">this</span>.socketFactory = builder.socketFactory;</div><div class="line"></div><div class="line">    <span class="comment">// more code...</span></div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">Builder</span> </span>&#123;</div><div class="line">  <span class="keyword">private</span> Cache cache;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Builder</span><span class="params">()</span> </span>&#123;</div><div class="line">      ...</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> Builder <span class="title">cache</span><span class="params">(Cache cache)</span> </span>&#123;</div><div class="line">      <span class="keyword">this</span>.cache = cache ;</div><div class="line">      <span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> Builder <span class="title">dispatcher</span><span class="params">(Dispatcher dispatcher)</span> </span>&#123;</div><div class="line">      ...</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> Builder <span class="title">protocols</span><span class="params">(List protocols)</span> </span>&#123;</div><div class="line">       ...</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> List <span class="title">networkInterceptors</span><span class="params">()</span> </span>&#123;</div><div class="line">      ...</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> Builder <span class="title">addNetworkInterceptor</span><span class="params">(Interceptor interceptor)</span> </span>&#123;</div><div class="line">      ...</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> OkHttpClient <span class="title">build</span><span class="params">()</span> </span>&#123;</div><div class="line">      <span class="keyword">return</span> <span class="keyword">new</span> OkHttpClient(<span class="keyword">this</span>);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+</blockquote>
+<h3 id="关于DialogFragment"><a href="#关于DialogFragment" class="headerlink" title="关于DialogFragment"></a>关于DialogFragment</h3><ul>
+<li>DialogFragment说到底还是一个Fragment，因此它继承了Fragment的所有特性。同理FragmentManager会管理DialogFragment。在手机配置发生变化的时候，FragmentManager可以负责现场的恢复工作。调用DialogFragment的setArguments(bundle)方法进行数据的设置，可以保证DialogFragment的数据也能恢复。</li>
+<li>DialogFragment里的onCreateView和onCreateDIalog 2个方法，onCreateView可以用来创建自定义Dialog，onCreateDIalog 可以用Dialog来创建系统原生Dialog。可以在一个类中管理2种不同的dialog。</li>
+</ul>
+<h4 id="使用Builder模式构建DialogFragment"><a href="#使用Builder模式构建DialogFragment" class="headerlink" title="使用Builder模式构建DialogFragment"></a>使用Builder模式构建DialogFragment</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LogoutDialogFragment</span> <span class="keyword">extends</span> <span class="title">DialogFragment</span> </span>&#123;</div><div class="line"></div><div class="line">...</div><div class="line"></div><div class="line">	<span class="comment">//属性</span></div><div class="line">	<span class="keyword">private</span> String sureText;</div><div class="line">	<span class="keyword">private</span> String tip;</div><div class="line">...</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">LogoutDialogFragment</span><span class="params">(Builder builder)</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.sureText = builder.sureText;</div><div class="line">		<span class="keyword">this</span>.tip = builder.tip;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">LogoutDialogFragment</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>(<span class="keyword">new</span> Builder());</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> Dialog <span class="title">onCreateDialog</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">	        <span class="comment">//创建dialog的代码</span></div><div class="line">		MaterialDialog.Builder customViewBuilder = <span class="keyword">new</span> MaterialDialog.Builder(getActivity()).customView(R.layout.logout_dialog_view, <span class="keyword">false</span>);</div><div class="line">		MaterialDialog dialog = customViewBuilder.build();</div><div class="line">		View view = dialog.getCustomView();</div><div class="line">		bind = ButterKnife.bind(<span class="keyword">this</span>, view);</div><div class="line">		initData();</div><div class="line">		<span class="keyword">return</span> dialog;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onStart</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">super</span>.onStart();</div><div class="line">		<span class="comment">//设置Dialog的位置</span></div><div class="line">		Window window = getDialog().getWindow();</div><div class="line">		WindowManager.LayoutParams params = window.getAttributes();</div><div class="line">		params.gravity = Gravity.CENTER;</div><div class="line">		params.width = DensityUtil.dip2px(getActivity(), <span class="number">270</span>);</div><div class="line">		window.setAttributes(params);</div><div class="line">		window.setBackgroundDrawable(<span class="keyword">new</span> ColorDrawable(Color.TRANSPARENT));</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initData</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">if</span> (!TextUtils.isEmpty(tip)) tvTip.setText(tip);</div><div class="line">		<span class="keyword">if</span> (!TextUtils.isEmpty(sureText)) tvSure.setText(sureText);</div><div class="line">	&#125;</div><div class="line">...</div><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">Builder</span> </span>&#123;</div><div class="line">		<span class="keyword">private</span> String sureText;</div><div class="line">		<span class="keyword">private</span> String tip;</div><div class="line">...</div><div class="line">		<span class="function"><span class="keyword">public</span> <span class="title">Builder</span><span class="params">()</span> </span>&#123;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="function"><span class="keyword">public</span> Builder <span class="title">setSureText</span><span class="params">(String sureText)</span> </span>&#123;</div><div class="line">			<span class="keyword">this</span>.sureText = sureText;</div><div class="line">			<span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="function"><span class="keyword">public</span> Builder <span class="title">setTipText</span><span class="params">(String tip)</span> </span>&#123;</div><div class="line">			<span class="keyword">this</span>.tip = tip;</div><div class="line">			<span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">		&#125;</div><div class="line">...</div><div class="line">		<span class="function"><span class="keyword">public</span> LogoutDialogFragment <span class="title">build</span><span class="params">()</span> </span>&#123;</div><div class="line">			<span class="keyword">return</span> <span class="keyword">new</span> LogoutDialogFragment(<span class="keyword">this</span>);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="总结两种在DialogFragment中动态替换布局的方式"><a href="#总结两种在DialogFragment中动态替换布局的方式" class="headerlink" title="总结两种在DialogFragment中动态替换布局的方式"></a>总结两种在DialogFragment中动态替换布局的方式</h3><h4 id="第一种-使用fragment"><a href="#第一种-使用fragment" class="headerlink" title="第一种:使用fragment"></a>第一种:使用fragment</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">@Nullable</div><div class="line">@Override</div><div class="line">public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) &#123;</div><div class="line">	getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);</div><div class="line">	View view = inflater.inflate(R.layout.material_type_dialog_view, container, false);</div><div class="line">	bind = ButterKnife.bind(this, view);</div><div class="line">	ListBean bean = (ListBean) getArguments().getSerializable(&quot;bean&quot;);</div><div class="line">	MaterialTypeFragment fragment = MaterialTypeFragment.newInstance(bean);</div><div class="line">	FragmentUtils.addFragment(getChildFragmentManager(), fragment, R.id.dialog_container);</div><div class="line">	fragment.setOnMaterialTypeDismiss(this);</div><div class="line">	return view;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">@Override</div><div class="line">public void onSelectedType(MaterialListItemBean bean) &#123;</div><div class="line">	FeeAddDialogFragment feeAddFragment = FeeAddDialogFragment.newInstance(bean);</div><div class="line">	FragmentUtils.replaceFragment(getChildFragmentManager(), R.id.dialog_container, feeAddFragment, false);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="第二种-直接替换view"><a href="#第二种-直接替换view" class="headerlink" title="第二种:直接替换view"></a>第二种:直接替换view</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@NonNull</span></div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> Dialog <span class="title">onCreateDialog</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">    dialog = <span class="keyword">new</span> MaterialDialog.Builder(getContext()).customView(R.layout.property_list_item_delete_dialog, <span class="keyword">false</span>).build();</div><div class="line">    customView = dialog.getCustomView();</div><div class="line">    bind = ButterKnife.bind(<span class="keyword">this</span>, customView);</div><div class="line">    <span class="keyword">return</span> dialog;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@OnClick</span>(R.id.tv_delete)</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onViewClicked</span><span class="params">()</span> </span>&#123;</div><div class="line">    LinearLayout container = (LinearLayout) customView.findViewById(R.id.ll_container);</div><div class="line">    container.removeAllViews();</div><div class="line">    View newView = LayoutUtil.inflate(R.layout.delete_property_list_dialog_view);</div><div class="line">    container.setGravity(Gravity.CENTER);<span class="comment">//设置内容居中</span></div><div class="line">    container.setBackground(<span class="keyword">new</span> ColorDrawable(Color.TRANSPARENT));<span class="comment">//设置背景透明</span></div><div class="line">    newView.setLayoutParams(<span class="keyword">new</span> ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));</div><div class="line">    initNewView(newView);</div><div class="line">    container.addView(newView);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Builder模式/" rel="tag"># Builder模式</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/23/blogs/在Kotlin中使用设计模式/" rel="prev" title="在Kotlin中使用设计模式">
+                在Kotlin中使用设计模式 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://i4.buimg.com/567571/3e920dd2ad03e598.jpg"
+               alt="Abyss" />
+          <p class="site-author-name" itemprop="name">Abyss</p>
+           
+              <p class="site-description motion-element" itemprop="description">灵魂歌者 | 意识流作家 | Geek</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/3372468724" target="_blank" title="weibo">
+                  
+                  weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景介绍"><span class="nav-number">1.</span> <span class="nav-text">背景介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#例子："><span class="nav-number">1.1.</span> <span class="nav-text">例子：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关于DialogFragment"><span class="nav-number">1.2.</span> <span class="nav-text">关于DialogFragment</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#使用Builder模式构建DialogFragment"><span class="nav-number">1.2.1.</span> <span class="nav-text">使用Builder模式构建DialogFragment</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结两种在DialogFragment中动态替换布局的方式"><span class="nav-number">1.3.</span> <span class="nav-text">总结两种在DialogFragment中动态替换布局的方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#第一种-使用fragment"><span class="nav-number">1.3.1.</span> <span class="nav-text">第一种:使用fragment</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第二种-直接替换view"><span class="nav-number">1.3.2.</span> <span class="nav-text">第二种:直接替换view</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Abyss</span>
+</div>
+
+
+<div class="powered-by">
+    个人专属
+</div>
+
+<div class="theme-info">
+  博客 -
+    NexT.Muse
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/three.min.js"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
