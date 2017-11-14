@@ -1,0 +1,827 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="框架搭建," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="背景介绍 一般我们自定义BaseActivity用来做一些公共操作与逻辑,比如添加管理Activitys,初始化一些类.然而存在一些第三方库让我们必须继承它的Activity,因为java单继承的特性,继承了很多不需要的方法.而且随着后来需求的变换,BaseActivity将越来越臃肿,越来越不好管理.">
+<meta name="keywords" content="框架搭建">
+<meta property="og:type" content="article">
+<meta property="og:title" content="少用继承的BaseActivity的封装">
+<meta property="og:url" content="http://yoursite.com/2017/10/13/blogs/少用继承的BaseActivity的封装/index.html">
+<meta property="og:site_name" content="Abyss's Blog">
+<meta property="og:description" content="背景介绍 一般我们自定义BaseActivity用来做一些公共操作与逻辑,比如添加管理Activitys,初始化一些类.然而存在一些第三方库让我们必须继承它的Activity,因为java单继承的特性,继承了很多不需要的方法.而且随着后来需求的变换,BaseActivity将越来越臃肿,越来越不好管理.">
+<meta property="og:updated_time" content="2017-10-13T09:09:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="少用继承的BaseActivity的封装">
+<meta name="twitter:description" content="背景介绍 一般我们自定义BaseActivity用来做一些公共操作与逻辑,比如添加管理Activitys,初始化一些类.然而存在一些第三方库让我们必须继承它的Activity,因为java单继承的特性,继承了很多不需要的方法.而且随着后来需求的变换,BaseActivity将越来越臃肿,越来越不好管理.">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/10/13/blogs/少用继承的BaseActivity的封装/"/>
+
+
+
+
+
+  <title>少用继承的BaseActivity的封装 | Abyss's Blog</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Abyss's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">我的征途是星辰大海</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/13/blogs/少用继承的BaseActivity的封装/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Abyss">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://i4.buimg.com/567571/3e920dd2ad03e598.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Abyss's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                少用继承的BaseActivity的封装
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-13T17:05:12+08:00">
+                2017-10-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>背景介绍</p>
+<p>一般我们自定义BaseActivity用来做一些公共操作与逻辑,比如添加管理Activitys,初始化一些类.然而存在一些第三方库让我们必须继承它的Activity,因为java单继承的特性,继承了很多不需要的方法.而且随着后来需求的变换,BaseActivity将越来越臃肿,越来越不好管理.<br><a id="more"></a></p>
+<p>我们对BaseActivity进行封装关键在于我们需要知道它的生命周期.我们可以使用另一种方式来知道它的生命周期</p>
+<h3 id="ActivityLifecycleCallbacks"><a href="#ActivityLifecycleCallbacks" class="headerlink" title="ActivityLifecycleCallbacks"></a>ActivityLifecycleCallbacks</h3><p>Application 提供有一个 registerActivityLifecycleCallbacks() 的方法,需要传入的参数就是这个 ActivityLifecycleCallbacks 接口,就是在你调用这个方法传入这个接口实现类后,系统会在每个 Activity 执行完对应的生命周期后都调用这个实现类中对应的方法,包括第三方库的Activity.</p>
+<p>由于所有Activity都会走ActivityLifecycleCallbacks,可以通过统一实现自己定义的接口IActivity,识别自己的Activity便于Activity的管理,同时还可以为自己的Activity加上自己的代理类.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">  public void onActivityCreated(Activity activity, Bundle savedInstanceState) &#123;</div><div class="line">...</div><div class="line"></div><div class="line">      //加入所有Activity,包括第三方的</div><div class="line">          mAppManager.addActivity(activity);</div><div class="line"></div><div class="line">      //配置ActivityDelegate</div><div class="line">      if (activity instanceof IActivity &amp;&amp; activity.getIntent() != null) &#123;</div><div class="line">          ActivityDelegate activityDelegate = fetchActivityDelegate(activity);</div><div class="line">          if (activityDelegate == null) &#123;</div><div class="line">          //为每个IActivity添加代理</div><div class="line">              activityDelegate = new ActivityDelegateImpl(activity);</div><div class="line">              activity.getIntent().putExtra(ActivityDelegate.ACTIVITY_DELEGATE, activityDelegate);</div><div class="line">          &#125;</div><div class="line">          //调用代理的方法</div><div class="line">          activityDelegate.onCreate(savedInstanceState);</div><div class="line">      &#125;</div><div class="line"></div><div class="line">      &#125;</div><div class="line">  &#125;</div></pre></td></tr></table></figure></p>
+<h3 id="实战-使用ActivityLifecycleCallbacks完成rxlifecycle2的使用"><a href="#实战-使用ActivityLifecycleCallbacks完成rxlifecycle2的使用" class="headerlink" title="实战:使用ActivityLifecycleCallbacks完成rxlifecycle2的使用"></a>实战:使用ActivityLifecycleCallbacks完成rxlifecycle2的使用</h3><p>使用rxjava时生命周期的绑定一直是个坑,于是通常使用rxlisfecycle来解决这个问题.通常都是在自定义的rxActivity中实现,然后通过继承来调用<code>bindToLifecycle</code>方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div></pre></td><td class="code"><pre><div class="line">public class RxFragmentActivity extends AppCompatActivity implements ActivityLifecycleProvider &#123;</div><div class="line">	private final BehaviorSubject&lt;ActivityEvent&gt; lifecycleSubject = BehaviorSubject.create();</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public final Observable&lt;ActivityEvent&gt; lifecycle() &#123;</div><div class="line">		return lifecycleSubject.asObservable();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public final &lt;T&gt; Observable.Transformer&lt;T, T&gt; bindUntilEvent(ActivityEvent event) &#123;</div><div class="line">		return RxLifecycle.bindUntilActivityEvent(lifecycleSubject, event);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public final &lt;T&gt; Observable.Transformer&lt;T, T&gt; bindToLifecycle() &#123;</div><div class="line">		return RxLifecycle.bindActivity(lifecycleSubject);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	@CallSuper</div><div class="line">	protected void onCreate(Bundle savedInstanceState) &#123;</div><div class="line">		super.onCreate(savedInstanceState);</div><div class="line">		lifecycleSubject.onNext(ActivityEvent.CREATE);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	@CallSuper</div><div class="line">	protected void onStart() &#123;</div><div class="line">		super.onStart();</div><div class="line">		lifecycleSubject.onNext(ActivityEvent.START);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	@CallSuper</div><div class="line">	protected void onResume() &#123;</div><div class="line">		super.onResume();</div><div class="line">		lifecycleSubject.onNext(ActivityEvent.RESUME);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	@CallSuper</div><div class="line">	protected void onPause() &#123;</div><div class="line">		lifecycleSubject.onNext(ActivityEvent.PAUSE);</div><div class="line">		super.onPause();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	@CallSuper</div><div class="line">	protected void onStop() &#123;</div><div class="line">		lifecycleSubject.onNext(ActivityEvent.STOP);</div><div class="line">		super.onStop();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	@CallSuper</div><div class="line">	protected void onDestroy() &#123;</div><div class="line">		lifecycleSubject.onNext(ActivityEvent.DESTROY);</div><div class="line">		super.onDestroy();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们看到在Activity生命周期上要调用对应的<code>lifecycleSubject.onNext(ActivityEvent.XXX)</code>,而生命周期我们可以通过ActivityLifecycleCallbacks知道.由于ActivityLifecycleCallbacks会响应所有的Activity的生命周期,我们需要提供一个自定义的接口来识别,只有实现了接口才去调用rxlifecycle的方法.一个lifecycleSubject对象使我们需要的,因此接口中可以是个提供lifecycleSubject对象的方法.</p>
+<p>现在我们用ActivityLifecycleCallbacks使用组合方式实现,增强拓展性</p>
+<h4 id="1-自定义接口"><a href="#1-自定义接口" class="headerlink" title="1.自定义接口"></a>1.自定义接口</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">public interface Lifecycleable&lt;E&gt; &#123;</div><div class="line">    @NonNull</div><div class="line">    Subject&lt;E&gt; provideLifecycleSubject();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>考虑到区分Fragment生命周期的管理,ActivityLifecycleable继承Lifecycleable<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">public interface ActivityLifecycleable extends Lifecycleable&lt;ActivityEvent&gt; &#123;</div><div class="line">&#125;</div><div class="line"></div><div class="line">public interface FragmentLifecycleable extends Lifecycleable&lt;FragmentEvent&gt; &#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="1-创建实现ActivityLifecycleCallbacks的实现类"><a href="#1-创建实现ActivityLifecycleCallbacks的实现类" class="headerlink" title="1.创建实现ActivityLifecycleCallbacks的实现类"></a>1.创建实现ActivityLifecycleCallbacks的实现类</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div></pre></td><td class="code"><pre><div class="line">@Singleton</div><div class="line">public class ActivityLifecycleForRxLifecycle implements Application.ActivityLifecycleCallbacks &#123;</div><div class="line">    private FragmentManager.FragmentLifecycleCallbacks mFragmentLifecycle;</div><div class="line"></div><div class="line">    @Inject</div><div class="line">    public ActivityLifecycleForRxLifecycle() &#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void onActivityCreated(Activity activity, Bundle savedInstanceState) &#123;</div><div class="line">        if (activity instanceof ActivityLifecycleable) &#123;</div><div class="line">        //识别Activity并获取lifecycleSubject对象</div><div class="line">            obtainSubject(activity).onNext(ActivityEvent.CREATE);</div><div class="line">            if (activity instanceof FragmentActivity)&#123;</div><div class="line">                if (mFragmentLifecycle == null) &#123;</div><div class="line">                //注册Fragment的生命周期的监听</div><div class="line">                    mFragmentLifecycle = new FragmentLifecycleForRxLifecycle();</div><div class="line">                &#125;</div><div class="line">                ((FragmentActivity) activity).getSupportFragmentManager().registerFragmentLifecycleCallbacks(mFragmentLifecycle, true);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void onActivityStarted(Activity activity) &#123;</div><div class="line">        if (activity instanceof ActivityLifecycleable) &#123;</div><div class="line">            obtainSubject(activity).onNext(ActivityEvent.START);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void onActivityResumed(Activity activity) &#123;</div><div class="line">        if (activity instanceof ActivityLifecycleable) &#123;</div><div class="line">            obtainSubject(activity).onNext(ActivityEvent.RESUME);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void onActivityPaused(Activity activity) &#123;</div><div class="line">        if (activity instanceof ActivityLifecycleable) &#123;</div><div class="line">            obtainSubject(activity).onNext(ActivityEvent.PAUSE);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void onActivityStopped(Activity activity) &#123;</div><div class="line">        if (activity instanceof ActivityLifecycleable) &#123;</div><div class="line">            obtainSubject(activity).onNext(ActivityEvent.STOP);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void onActivitySaveInstanceState(Activity activity, Bundle outState) &#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void onActivityDestroyed(Activity activity) &#123;</div><div class="line">        if (activity instanceof ActivityLifecycleable) &#123;</div><div class="line">            obtainSubject(activity).onNext(ActivityEvent.DESTROY);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private Subject&lt;ActivityEvent&gt; obtainSubject(Activity activity) &#123;</div><div class="line">        return ((ActivityLifecycleable) activity).provideLifecycleSubject();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="2-创建实现FragmentLifecycleCallbacks的实现类"><a href="#2-创建实现FragmentLifecycleCallbacks的实现类" class="headerlink" title="2.创建实现FragmentLifecycleCallbacks的实现类"></a>2.创建实现FragmentLifecycleCallbacks的实现类</h4><p>public class FragmentLifecycleForRxLifecycle extends FragmentManager.FragmentLifecycleCallbacks {</p>
+<p>   @Override<br>    public void onFragmentAttached(FragmentManager fm, Fragment f, Context context) {<br>        if (f instanceof FragmentLifecycleable) {<br>            obtainSubject(f).onNext(FragmentEvent.ATTACH);<br>        }<br>    }</p>
+<pre><code>@Override
+public void onFragmentCreated(FragmentManager fm, Fragment f, Bundle savedInstanceState) {
+    if (f instanceof FragmentLifecycleable) {
+        obtainSubject(f).onNext(FragmentEvent.CREATE);
+    }
+}
+
+
+@Override
+public void onFragmentViewCreated(FragmentManager fm, Fragment f, View v, Bundle savedInstanceState) {
+    if (f instanceof FragmentLifecycleable) {
+        obtainSubject(f).onNext(FragmentEvent.CREATE_VIEW);
+    }
+}
+
+@Override
+public void onFragmentStarted(FragmentManager fm, Fragment f) {
+    if (f instanceof FragmentLifecycleable) {
+        obtainSubject(f).onNext(FragmentEvent.START);
+    }
+}
+
+@Override
+public void onFragmentResumed(FragmentManager fm, Fragment f) {
+    if (f instanceof FragmentLifecycleable) {
+        obtainSubject(f).onNext(FragmentEvent.RESUME);
+    }
+}
+
+@Override
+public void onFragmentPaused(FragmentManager fm, Fragment f) {
+    if (f instanceof FragmentLifecycleable) {
+        obtainSubject(f).onNext(FragmentEvent.PAUSE);
+    }
+}
+
+@Override
+public void onFragmentStopped(FragmentManager fm, Fragment f) {
+    if (f instanceof FragmentLifecycleable) {
+        obtainSubject(f).onNext(FragmentEvent.STOP);
+    }
+}
+
+@Override
+public void onFragmentViewDestroyed(FragmentManager fm, Fragment f) {
+    if (f instanceof FragmentLifecycleable) {
+        obtainSubject(f).onNext(FragmentEvent.DESTROY_VIEW);
+    }
+}
+
+@Override
+public void onFragmentDestroyed(FragmentManager fm, Fragment f) {
+    if (f instanceof FragmentLifecycleable) {
+        obtainSubject(f).onNext(FragmentEvent.DESTROY);
+    }
+}
+
+@Override
+public void onFragmentDetached(FragmentManager fm, Fragment f) {
+    if (f instanceof FragmentLifecycleable) {
+        obtainSubject(f).onNext(FragmentEvent.DETACH);
+    }
+}
+private Subject&lt;FragmentEvent&gt; obtainSubject(Fragment fragment) {
+    return ((FragmentLifecycleable) fragment).provideLifecycleSubject();
+}
+</code></pre><p>}</p>
+<h3 id="3-在Application中注册Activity的生命周期的监听"><a href="#3-在Application中注册Activity的生命周期的监听" class="headerlink" title="3.在Application中注册Activity的生命周期的监听"></a>3.在Application中注册Activity的生命周期的监听</h3><p>由于是注册监听,那就意味可以按自己意愿去实现多个不同功能的监听,实现了功能的组装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">public class BaseApplication extends Application&#123;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void onCreate() &#123;</div><div class="line">                registerActivityLifecycleCallbacks(new ActivityLifecycleForRxLifecycle());</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="4-在BaseActivity实现ActivityLifecycleable接口"><a href="#4-在BaseActivity实现ActivityLifecycleable接口" class="headerlink" title="4.在BaseActivity实现ActivityLifecycleable接口"></a>4.在BaseActivity实现ActivityLifecycleable接口</h3><p>现在只需要实现对应的接口就能使Activity具备对应的功能了,Fragment也一样<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">public class RxFragmentActivity extends AppCompatActivity implements ActivityLifecycleable &#123;</div><div class="line"></div><div class="line">    private final BehaviorSubject&lt;ActivityEvent&gt; mLifecycleSubject = BehaviorSubject.create();</div><div class="line"></div><div class="line">    @NonNull</div><div class="line">    @Override</div><div class="line">    public final Subject&lt;ActivityEvent&gt; provideLifecycleSubject() &#123;</div><div class="line">        return mLifecycleSubject;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="拓展"><a href="#拓展" class="headerlink" title="拓展"></a>拓展</h3><p>ActivityLifecycleCallbacks 是公用的,当一个 Activity 在 onCreate 方法产生了一个对象 ,我们需要在这个 Activity 执行 onDestroy 时用到这个对象,怎么办?因为每个 Activity 都要产生这个对象,我们不可能把这个对象存储在 ActivityLifecycleCallbacks 中.可以用到 Activity.getIntent 来存储一些数据, Intent 中持有一个 Bundle 对象可以存储一些数据,</p>
+<p>我们需要使用 ActivityLifecycleCallbacks 实现给所有 Activity 执行 ButterKnife.bind(activity)</p>
+<p>Bundle 中可以存储 Parcelable 对象<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">public class ActivityBean extends Parcelable &#123;</div><div class="line">    private Unbinder unbinder;</div><div class="line">    public void setUnbinder(Unbinder unbinder)&#123;</div><div class="line">        thid.unbinder = unbinder;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    public Unbinder getUnbinder()&#123;</div><div class="line">        return unbinder;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在 ActivityLifecycleCallbacks 执行对应逻辑<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">public class WEApplication extends BaseApplication&#123;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void onCreate() &#123;</div><div class="line">        super.onCreate();</div><div class="line">        registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() &#123;</div><div class="line">            @Override</div><div class="line">            public void onActivityCreated(Activity activity, Bundle savedInstanceState) &#123;</div><div class="line">                ActivityBean bean = new ActivityBean();</div><div class="line">                Unbinder unbinder = ButterKnife.bind(activity);</div><div class="line">                bean.setUnbinder(unbinder);</div><div class="line">                activity.getIntent().putExtra(&quot;ActivityBean&quot;, bean);</div><div class="line">           &#125;</div><div class="line"></div><div class="line">            ...</div><div class="line">            </div><div class="line">            @Override</div><div class="line">            public void onActivityDestroyed(Activity activity) &#123;</div><div class="line">                ActivityBean bean = activity.getIntent().getParcelableExtra(&quot;ActivityBean&quot;);</div><div class="line">                bean.getUnbinder().unbind();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">            </div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>BaseActivity封装的核心就是<code>registerActivityLifecycleCallbacks()</code>,而利用它可以实现什么功能就得发挥自己的想象了.相较于传统的继承封装方式,这种方式有了更多的灵活性和拓展性.</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/框架搭建/" rel="tag"># 框架搭建</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/13/blogs/Java中的Lambda表达式/" rel="next" title="Java中的Lambda表达式">
+                <i class="fa fa-chevron-left"></i> Java中的Lambda表达式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/26/blogs/Builder模式--使用DialogFragment/" rel="prev" title="Builder模式-使用DialogFragment">
+                Builder模式-使用DialogFragment <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://i4.buimg.com/567571/3e920dd2ad03e598.jpg"
+               alt="Abyss" />
+          <p class="site-author-name" itemprop="name">Abyss</p>
+           
+              <p class="site-description motion-element" itemprop="description">灵魂歌者 | 意识流作家 | Geek</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/3372468724" target="_blank" title="weibo">
+                  
+                  weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#ActivityLifecycleCallbacks"><span class="nav-number">1.</span> <span class="nav-text">ActivityLifecycleCallbacks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实战-使用ActivityLifecycleCallbacks完成rxlifecycle2的使用"><span class="nav-number">2.</span> <span class="nav-text">实战:使用ActivityLifecycleCallbacks完成rxlifecycle2的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-自定义接口"><span class="nav-number">2.1.</span> <span class="nav-text">1.自定义接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-创建实现ActivityLifecycleCallbacks的实现类"><span class="nav-number">2.2.</span> <span class="nav-text">1.创建实现ActivityLifecycleCallbacks的实现类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-创建实现FragmentLifecycleCallbacks的实现类"><span class="nav-number">2.3.</span> <span class="nav-text">2.创建实现FragmentLifecycleCallbacks的实现类</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-在Application中注册Activity的生命周期的监听"><span class="nav-number">3.</span> <span class="nav-text">3.在Application中注册Activity的生命周期的监听</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-在BaseActivity实现ActivityLifecycleable接口"><span class="nav-number">4.</span> <span class="nav-text">4.在BaseActivity实现ActivityLifecycleable接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#拓展"><span class="nav-number">5.</span> <span class="nav-text">拓展</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number"></span> <span class="nav-text">总结</span></a></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Abyss</span>
+</div>
+
+
+<div class="powered-by">
+    个人专属
+</div>
+
+<div class="theme-info">
+  博客 -
+    NexT.Muse
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/three.min.js"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
